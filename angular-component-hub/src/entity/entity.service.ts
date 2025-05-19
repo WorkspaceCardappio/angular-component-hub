@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 export class EntityService<V, K> {
 
   private readonly PAGE_SIZE: string = 'page_size';
+  private readonly SEARCH: string = 'search';
   private readonly DEFAULT_PAGE_SIZE: number = 20;
 
   resource: string = '';
@@ -14,10 +15,11 @@ export class EntityService<V, K> {
     private httpClient: HttpClient
   ) { }
 
-  public findAll(pageSize: number = this.DEFAULT_PAGE_SIZE): Observable<V[]> {
+  public findAll(pageSize: number = this.DEFAULT_PAGE_SIZE, search?: string): Observable<V[]> {
 
     const params = new HttpParams()
-      .set(this.PAGE_SIZE, pageSize.toString());
+      .set(this.PAGE_SIZE, pageSize.toString())
+      .set(this.SEARCH, search ? search : '');
 
     return this.httpClient.get<V[]>(this.resource, { params: params });
   }

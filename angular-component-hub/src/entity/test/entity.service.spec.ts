@@ -16,9 +16,9 @@ describe('entity.service.spec.ts', () => {
     service.resource = url;
   });
 
-  it('findByAll with pageSize', () => {
+  it('findByAll with pageSize and search', () => {
 
-    service.findAll(100);
+    service.findAll(100, 'id=27');
 
     const call = httpClient.get.calls.mostRecent();
     const expedtedUrl = call.args[0];
@@ -27,9 +27,10 @@ describe('entity.service.spec.ts', () => {
     expect(httpClient.get).toHaveBeenCalledTimes(1);
     expect(expedtedUrl).toEqual(url);
     expect(expectedParams.get('page_size')).toEqual('100');
+    expect(expectedParams.get('search')).toEqual('id=27');
   });
 
-  it('findAll without pageSize', () => {
+  it('findAll without pageSize and search', () => {
 
     service.findAll();
 
@@ -40,6 +41,7 @@ describe('entity.service.spec.ts', () => {
     expect(httpClient.get).toHaveBeenCalledTimes(1);
     expect(expedtedUrl).toEqual(url);
     expect(expectedParams.get('page_size')).toEqual('20');
+    expect(expectedParams.get('search')).toEqual('');
   });
 
   it('findById', () => {
