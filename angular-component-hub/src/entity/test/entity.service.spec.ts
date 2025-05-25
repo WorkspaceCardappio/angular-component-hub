@@ -1,6 +1,8 @@
 import { EntityService } from '../entity.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import SpyObj = jasmine.SpyObj;
+import { of } from 'rxjs';
+import { Page } from '../../model/page.model';
 
 describe('entity.service.spec.ts', () => {
 
@@ -18,6 +20,8 @@ describe('entity.service.spec.ts', () => {
 
   it('findByAll with pageSize and search', () => {
 
+    httpClient.get.and.returnValue(of({} as Page<any>))
+
     service.findAll(100, 'id=27');
 
     const call = httpClient.get.calls.mostRecent();
@@ -31,6 +35,8 @@ describe('entity.service.spec.ts', () => {
   });
 
   it('findAll without pageSize and search', () => {
+
+    httpClient.get.and.returnValue(of({} as Page<any>))
 
     service.findAll();
 

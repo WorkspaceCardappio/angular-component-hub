@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { Page } from '../model/page.model';
 
 @Injectable()
 export class EntityService<V, K> {
@@ -21,7 +22,8 @@ export class EntityService<V, K> {
       .set(this.PAGE_SIZE, pageSize.toString())
       .set(this.SEARCH, search ? search : '');
 
-    return this.httpClient.get<V[]>(this.resource, { params: params });
+    return this.httpClient.get<Page<V>>(this.resource, { params: params })
+      .pipe(map((page: Page<V>) => page.content));
   }
 
   public findById(id: K): Observable<V> {
