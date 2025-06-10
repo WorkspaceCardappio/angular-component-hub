@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test: # É criado um job chamado test que vai rodar numa máquina virtual Ubuntu
+  angular-component-hub: # É criado um job chamado test que vai rodar numa máquina virtual Ubuntu
     runs-on: ubuntu-latest
 
     steps:
