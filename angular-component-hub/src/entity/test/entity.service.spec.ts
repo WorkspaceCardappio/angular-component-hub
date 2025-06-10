@@ -28,7 +28,7 @@ describe('entity.service.spec.ts', () => {
     const expedtedUrl = call.args[0];
     const expectedParams = call.args[1]?.params as HttpParams;
 
-    expect(httpClient.get).toHaveBeenCalledTimes(2);
+    expect(httpClient.get).toHaveBeenCalledTimes(1);
     expect(expedtedUrl).toEqual(url);
     expect(expectedParams.get('page_size')).toEqual('100');
     expect(expectedParams.get('search')).toEqual('id=27');
