@@ -4,12 +4,11 @@ import { SizeParams } from "./size-params.model";
 import { TitleParams } from "./title-params.model";
 
 export interface ButtonParams {
-  title: TitleParams,
+  title: Partial<TitleParams>,
   background: string,
   radius: number,
-  border: BorderParams,
-  size: SizeParams,
-  icon: IconParams,
-  outlined: false,
+  border: Partial<BorderParams>,
+  size: Partial<SizeParams>,
+  icon: Partial<IconParams>,
   gap: number
 }
