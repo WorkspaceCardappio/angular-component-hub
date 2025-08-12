@@ -1,0 +1,4 @@
+<button [ngStyle]="buttonStyle" (click)="onClick.emit()">
+  <i [class]="params.icon.name" [style.fontSize.px]="params.icon.size" [style.color]="params.icon.color"></i>
+  <p [ngStyle]="{ fontSize: params.title.size }">{{ params.title.name }}</p>
+</button>

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { GenericButtonComponent } from './components/button/generic/generic.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [GenericButtonComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
