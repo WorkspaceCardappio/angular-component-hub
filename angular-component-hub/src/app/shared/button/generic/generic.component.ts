@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Size } from '../../utils/size.model';
 import { ButtonParams } from '../params/button-params.model';
 
 @Component({
@@ -16,7 +17,7 @@ export class GenericButtonComponent {
 
   private readonly DEFAULT_PARAMS: ButtonParams = {
     radius: 10,
-    size: { width: 100, height: 40 },
+    size: { width: Size.SMALL, height: 40 },
     title: { name: 'Generic Button', size: '18', color: this.SECONDARY_COLOR_TEXT },
     icon: { name: '', size: '20', color: this.SECONDARY_COLOR_TEXT },
     background: this.PRIMARY_COLOR,

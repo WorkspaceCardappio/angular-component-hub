@@ -1,4 +1,6 @@
+import { Size } from "../../utils/size.model";
+
 export interface SizeParams {
-  width: number,
+  width: Size,
   height: number
 }
