@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CancelButtonComponent } from './shared/button/cancel/cancel.component';
+import { SaveButtonComponent } from "./shared/button/save/save.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [SaveButtonComponent, CancelButtonComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'angular-component-hub';
+ title = 'angular-component-hub';
 }
