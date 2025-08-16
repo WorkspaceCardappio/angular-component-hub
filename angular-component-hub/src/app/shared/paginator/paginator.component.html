@@ -1,0 +1,19 @@
+<div>
+  <ul>
+    <li [ngClass]="{ disabled: pageable.first }" (click)="!pageable.first && previousPage()">
+      <i class="fa-solid fa-caret-left"></i>
+    </li>
+
+    @for (page of pages; track $index) {
+      <li
+        [ngClass]="{ active: currentPage() === page }"
+        (click)="defineCurrentPage(page)">
+        {{ page }}
+      </li>
+    }
+
+    <li [ngClass]="{ disabled: pageable.last }" (click)="!pageable.last && nextPage()">
+      <i class="fa-solid fa-caret-right"></i>
+    </li>
+  </ul>
+</div>

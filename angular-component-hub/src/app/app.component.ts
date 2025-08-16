@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { EntityService } from '../entity/entity.service';
@@ -5,7 +6,7 @@ import { ListComponent } from './shared/list/list.component';
 
 @Component({
   selector: 'app-root',
-  imports: [ListComponent],
+  imports: [ListComponent, CommonModule],
   providers: [
     EntityService,
     HttpClient,
