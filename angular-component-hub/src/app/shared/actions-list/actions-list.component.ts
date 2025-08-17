@@ -34,6 +34,8 @@ export class ActionsListComponent {
 
   @Input({ required: true }) nameRoute!: string;
   @Input({ required: true }) id!: number;
+
+  // TODO: melhorar nome
   @Input() actionsInput: ActionItem[] | undefined;
 
   constructor(

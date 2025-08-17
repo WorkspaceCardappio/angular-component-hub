@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Pageable } from '../../model/pageable.model';
 import { ActionsListComponent } from "../actions-list/actions-list.component";
 import { GenericButtonComponent } from "../button/generic/generic.component";
@@ -29,12 +30,15 @@ export class ListComponent implements OnInit {
 
   responseData: Pageable = { content: [], empty: false, first: false, last: true, number: 0, totalPages: 30 } as any;
 
+  constructor(
+    private readonly _router: Router
+  ) {}
+
   ngOnInit(): void {
 
     for(let i = 0; i < 10; i++) {
       this.responseData.content.push(`teste ${i}`);
     }
-
   }
 
   detectChangePageSize(value: number) {
@@ -43,6 +47,10 @@ export class ListComponent implements OnInit {
 
   detectChangePage(value: number) {
     console.log('Mudou page findAll Com tamanho diferente:' + value);
+  }
+
+  goToNew() {
+    this._router.navigate([`${this.params.route}/new`])
   }
 
 }
