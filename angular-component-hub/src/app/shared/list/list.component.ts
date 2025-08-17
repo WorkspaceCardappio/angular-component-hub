@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Pageable } from '../../model/pageable.model';
+import { ActionsListComponent } from "../actions-list/actions-list.component";
 import { GenericButtonComponent } from "../button/generic/generic.component";
 import { PageSizeComponent } from "../page-size/page-size.component";
 import { PaginatorComponent } from '../paginator/paginator.component';
@@ -8,16 +9,25 @@ import { ListParams } from './params/list-params.model';
 
 @Component({
   selector: 'app-list',
-  imports: [CommonModule, PaginatorComponent, PageSizeComponent, GenericButtonComponent, GenericButtonComponent],
+  imports: [
+    CommonModule,
+    PaginatorComponent,
+    PageSizeComponent,
+    GenericButtonComponent,
+    GenericButtonComponent,
+    ActionsListComponent
+  ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
 })
 export class ListComponent implements OnInit {
 
   @Input({ required: true }) params!: ListParams;
+
+  // TODO: Transformar em Set com params de primeiro valor
   @Input() quantityPages: number[] = [20, 5, 10, 50, 100];
 
-  responseData: Pageable = { content: [], empty: false, first: true, last: true, number: 0, totalPages: 30 } as any;
+  responseData: Pageable = { content: [], empty: false, first: false, last: true, number: 0, totalPages: 30 } as any;
 
   ngOnInit(): void {
 

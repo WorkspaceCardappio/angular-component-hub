@@ -17,6 +17,7 @@
         <li>Teste</li>
         <li>Teste</li>
         <li>Teste</li>
+        <li>Ações</li>
       </ul>
     </header>
 
@@ -33,6 +34,12 @@
             <li>{{ item }}</li>
             <li>{{ item }}</li>
             <li>{{ item }}</li>
+            <li>
+              <app-actions-list
+                [nameRoute]="'teste'"
+                [id]="1"
+              ></app-actions-list>
+            </li>
           </ul>
         }
       </main>
