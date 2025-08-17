@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Pageable } from '../../model/pageable.model';
+import { GenericButtonComponent } from "../button/generic/generic.component";
 import { PageSizeComponent } from "../page-size/page-size.component";
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { ListParams } from './params/list-params.model';
 
 @Component({
   selector: 'app-list',
-  imports: [CommonModule, PaginatorComponent, PageSizeComponent],
+  imports: [CommonModule, PaginatorComponent, PageSizeComponent, GenericButtonComponent, GenericButtonComponent],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
 })
@@ -28,6 +29,10 @@ export class ListComponent implements OnInit {
 
   detectChangePageSize(value: number) {
     console.log('Mudou size fazer o findAll Com tamanho diferente:' + value);
+  }
+
+  detectChangePage(value: number) {
+    console.log('Mudou page findAll Com tamanho diferente:' + value);
   }
 
 }

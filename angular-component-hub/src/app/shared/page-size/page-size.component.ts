@@ -24,7 +24,7 @@ export class PageSizeComponent implements OnInit {
 
   @Input({ required: true }) quantityPages!: number[];
 
-  @Output() detectPageSize: EventEmitter<number> = new EventEmitter();
+  @Output() onChange: EventEmitter<number> = new EventEmitter();
 
   readonly selectedPageSize = signal(20);
 
@@ -38,7 +38,7 @@ export class PageSizeComponent implements OnInit {
     if (!value) return;
 
     this.selectedPageSize.set(parseInt(value));
-    this.detectPageSize.emit(this.selectedPageSize());
+    this.onChange.emit(this.selectedPageSize());
   }
 
 }

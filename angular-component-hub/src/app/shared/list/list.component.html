@@ -1,3 +1,15 @@
+<div class="header">
+  <app-generic-button
+    [params]="{
+      title: { name: 'Novo' },
+      icon: { name: 'fa-solid fa-plus', size: '14' }
+    }"
+  ></app-generic-button>
+
+  <input placeholder="Filtro"/>
+
+</div>
+
 <section>
     <header>
       <ul>
@@ -29,12 +41,15 @@
         <div>
             <app-page-size
               [quantityPages]="quantityPages"
-              (detectPageSize)="detectChangePageSize($event)"
+              (onChange)="detectChangePageSize($event)"
             ></app-page-size>
         </div>
 
         <div class="center">
-          <app-paginator [pageable]="responseData"></app-paginator>
+          <app-paginator
+            [pageable]="responseData"
+            (onChange)="detectChangePage($event)"
+          ></app-paginator>
         </div>
       </footer>
 

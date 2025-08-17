@@ -1,3 +1,17 @@
+.header {
+  display: flex;
+  padding: 10px;
+  gap: 20px;
+
+  input {
+    width: 80%;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+}
+
 section {
 
   margin: 0;
