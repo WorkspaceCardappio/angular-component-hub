@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { PageItem } from '../../model/page-item.model';
 import { Pageable } from '../../model/pageable.model';
 
 @Component({
@@ -10,58 +11,100 @@ import { Pageable } from '../../model/pageable.model';
 })
 export class PaginatorComponent implements OnInit {
 
-  readonly INITIAL_PAGE = 1;
+  private readonly INITIAL_PAGE = 1;
+  private readonly MORE_PAGES = '...';
 
   @Input({ required: true }) pageable!: Pageable;
+  @Output() onChange: EventEmitter<number> = new EventEmitter();
 
-  pages: string[] = [];
-  currentPage = signal(`${this.INITIAL_PAGE}`);
+  pages: PageItem[] = [];
+  currentPage = signal(this.INITIAL_PAGE);
 
   ngOnInit(): void {
-    this.currentPage.set(`${this.pageable.number + this.INITIAL_PAGE}`);
+    this.currentPage.set(this.pageable.number + this.INITIAL_PAGE);
     this.buildPages();
   }
 
   buildPages() {
 
-    // TODO: passar um objeto para o front com disable, active e value
+    const pages: PageItem[] = [];
+    const total = this.pageable.totalPages;
+    const current = this.currentPage();
 
-    const pages: string[] = [];
+    if (total <= 7) {
 
-    if (this.pageable.totalPages <= 7) {
-
-      for (let i = 1; i <= this.pageable.totalPages; i++) {
-        pages.push(`${i}`);
-      }
+      for (let i = 1; i <= total; i++)
+        this.addPage(pages, i, current === i);
 
       this.pages = pages;
       return;
     }
 
-    if (parseInt(this.currentPage()) <= 4) {
-      pages.push('1', '2', '3', '4', '5', '...', `${this.pageable.totalPages}`);
-    } else if (parseInt(this.currentPage()) >= this.pageable.totalPages - 3) {
-      pages.push('1', '...', `${this.pageable.totalPages - 4}`, `${this.pageable.totalPages - 3}`, `${this.pageable.totalPages - 2}`, `${this.pageable.totalPages - 1}`, `${this.pageable.totalPages}`);
-    } else {
-      pages.push('1', '...', `${parseInt(this.currentPage()) - 2}`, `${parseInt(this.currentPage()) - 1}`, `${parseInt(this.currentPage()) + 1}`, '...', `${this.pageable.totalPages}`);
+    if (current <= 4) {
+
+      [1, 2, 3, 4, 5]
+        .forEach(value => this.addPage(pages, value, current === value));
+
+      this.addPage(pages, this.MORE_PAGES, false);
+      this.addPage(pages, total, current === total);
+      this.pages = pages;
+      return;
+
     }
+
+    if (current >= total - 3) {
+
+      this.addPage(pages, this.INITIAL_PAGE, current === this.INITIAL_PAGE);
+      this.addPage(pages, this.MORE_PAGES, false);
+
+      for (let i = total - 4; i <= total; i++)
+        this.addPage(pages, i, current === i);
+
+      this.pages = pages;
+      return;
+
+    }
+
+    this.addPage(pages, this.INITIAL_PAGE, current === this.INITIAL_PAGE);
+    this.addPage(pages, this.MORE_PAGES, false);
+
+    for (let i = current - 1; i <= current + 1; i++)
+      this.addPage(pages, i, current === i);
+
+    this.addPage(pages, this.MORE_PAGES, false);
+    this.addPage(pages, total, current === total);
 
     this.pages = pages;
   }
 
   previousPage() {
-    this.currentPage.update(current => `${parseInt(current) - this.INITIAL_PAGE}`);
+    this.currentPage.update(current => current - this.INITIAL_PAGE);
     this.buildPages();
+    this.onChange.emit(this.currentPage());
   }
 
   nextPage() {
-    this.currentPage.update(current => `${parseInt(current) + this.INITIAL_PAGE}`);
+    this.currentPage.update(current => current + this.INITIAL_PAGE);
     this.buildPages();
+    this.onChange.emit(this.currentPage());
   }
 
-  defineCurrentPage(value: string) {
+  defineCurrentPage(value: number | string) {
+
+    if (typeof value === 'string')
+      return;
+
     this.currentPage.set(value);
     this.buildPages();
+    this.onChange.emit(this.currentPage());
+  }
+
+  private addPage(pages: PageItem[], value: string | number, isActive: boolean) {
+    pages.push({
+      value: value,
+      active: isActive,
+      disabled: value === this.MORE_PAGES,
+    });
   }
 
 }

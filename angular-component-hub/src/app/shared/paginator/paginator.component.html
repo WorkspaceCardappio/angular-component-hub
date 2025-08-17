@@ -6,9 +6,9 @@
 
     @for (page of pages; track $index) {
       <li
-        [ngClass]="{ active: currentPage() === page }"
-        (click)="defineCurrentPage(page)">
-        {{ page }}
+        [ngClass]="{ active: page.active, disabled: page.disabled}"
+        (click)="!page.active && !page.disabled && defineCurrentPage(page.value)">
+        {{ page.value }}
       </li>
     }
 

@@ -14,7 +14,7 @@ export class ListComponent implements OnInit {
 
   @Input({ required: true }) params!: ListParams;
 
-  responseData: Pageable = { content: [], empty: false, first: false, last: false, number: 0, totalPages: 30 } as any;
+  responseData: Pageable = { content: [], empty: false, first: true, last: true, number: 0, totalPages: 30 } as any;
 
   ngOnInit(): void {
 
