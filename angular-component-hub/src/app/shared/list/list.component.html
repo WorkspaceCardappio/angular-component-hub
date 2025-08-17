@@ -25,9 +25,18 @@
         }
       </main>
 
-      <app-paginator
-        [pageable]="responseData"
-      ></app-paginator>
+      <footer>
+        <div>
+            <app-page-size
+              [quantityPages]="quantityPages"
+              (detectPageSize)="detectChangePageSize($event)"
+            ></app-page-size>
+        </div>
+
+        <div class="center">
+          <app-paginator [pageable]="responseData"></app-paginator>
+        </div>
+      </footer>
 
     }
 

@@ -59,30 +59,14 @@ section {
 footer {
 
   display: flex;
-  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  position: relative;
 
-  div {
-
-    width: auto;
-
-    ul {
-      display: flex;
-      gap: 5px;
-    }
-
-    ul li {
-      border-radius: 5px;
-      color: #949393;
-      border: 1px solid #ccc;
-      padding: 5px 10px;
-      list-style: none;
-    }
-
-    ul li:nth-child(2) {
-      color: #D94D27;
-      border: 1px solid #D94D27;
-    }
-
+  .center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
 }
