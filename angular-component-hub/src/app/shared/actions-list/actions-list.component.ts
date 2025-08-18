@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { DialogComponent } from '../../dialog/dialog.component';
 import { ActionItem } from '../../model/action-item.model';
 
 @Component({
   selector: 'app-actions-list',
-  imports: [],
+  imports: [DialogComponent],
   template: `
     <span>
 
@@ -12,6 +13,18 @@ import { ActionItem } from '../../model/action-item.model';
         @if (item.enabled) {
           <i [class]="item.icon.name" (click)="item.action(id)" [style.color]="item.icon.color" style="font-size: 14px;"></i>
         }
+      }
+
+      @if (showDialogDelete) {
+        <app-dialog
+          [params]="{
+            title: 'Deletar',
+            content: 'Deseja confirmar a deleção?'
+          }"
+          (eventCancel)="this.showDialogDelete = !this.showDialogDelete"
+          (eventConfirm)="confirmDelete()"
+        ></app-dialog>
+
       }
 
     </span>
@@ -32,17 +45,16 @@ export class ActionsListComponent {
   readonly showEdicao = true;
   readonly showDelecao = true;
 
+  protected showDialogDelete = false;
+
   @Input({ required: true }) nameRoute!: string;
   @Input({ required: true }) id!: number;
 
-  // TODO: melhorar nome
   @Input() actionsInput: ActionItem[] | undefined;
 
   constructor(
     private readonly router: Router
   ) {}
-
-  // TODO: Precisa abrir um dialog para confirmar deleção
 
   get actions(): ActionItem[] {
     return [...this.actionsInput || [], ...this._DEFAULT_ACTIONS];
@@ -59,9 +71,13 @@ export class ActionsListComponent {
       {
         name: 'Delete',
         icon: { name: 'fa-solid fa-trash-can', color: '#D33B19' },
-        action: (id?: number) => this.router.navigate([`${this.nameRoute}/${id}`]),
+        action: () => this.showDialogDelete = !this.showDialogDelete,
         enabled: this.showDelecao
       }
     ];
+  }
+
+  confirmDelete() {
+    console.log('chamar rota de delete');
   }
 }
