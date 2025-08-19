@@ -23,12 +23,14 @@ import { ListParams } from './params/list-params.model';
 })
 export class ListComponent implements OnInit {
 
-  @Input({ required: true }) params!: ListParams;
+  @Input({ required: true }) params!: Partial<ListParams>;
 
-  // TODO: Transformar em Set com params de primeiro valor
   @Input() quantityPages: number[] = [20, 5, 10, 50, 100];
 
-  responseData: Pageable = { content: [], empty: false, first: false, last: true, number: 0, totalPages: 30 } as any;
+  responseData: Pageable = { content: [], empty: false, first: false, last: false, number: 0, totalPages: 30 } as any;
+
+  gridTemplateColumns: string | undefined;
+  showActions = true;
 
   constructor(
     private readonly _router: Router
@@ -37,8 +39,11 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
 
     for(let i = 0; i < 10; i++) {
-      this.responseData.content.push(`teste ${i}`);
+      this.responseData.content.push({ universo: 'universo' + i, mundo: 'mundo', ricardo: 'ricardo', teste: 'teste', id: i, kenji: 'teste' });
     }
+
+    this.defineShowActions();
+    this.buildTemplateColumns();
   }
 
   detectChangePageSize(value: number) {
@@ -51,6 +56,21 @@ export class ListComponent implements OnInit {
 
   goToNew() {
     this._router.navigate([`${this.params.route}/new`])
+  }
+
+  buildTemplateColumns() {
+
+    this.gridTemplateColumns = (this.params.columns || [])
+      .map(column => `${column.size || 3}fr`)
+      .join(' ');
+
+    if (this.showActions)
+      this.gridTemplateColumns += ' 1fr';
+  }
+
+  defineShowActions() {
+    if (this.params.showActions === false)
+      this.showActions = this.params.showActions;
   }
 
 }

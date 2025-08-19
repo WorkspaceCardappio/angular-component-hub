@@ -13,12 +13,16 @@
 
 <section>
     <header>
-      <ul>
-        <li>Teste</li>
-        <li>Teste</li>
-        <li>Teste</li>
-        <li>Teste</li>
-        <li>Ações</li>
+
+      <ul [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
+        @for (column of params.columns; track $index) {
+          <li>{{ column.title }}</li>
+        }
+
+        @if (showActions) {
+          <li class="actions">Ações</li>
+        }
+
       </ul>
     </header>
 
@@ -30,17 +34,19 @@
 
       <main>
         @for (item of responseData.content; track $index) {
-          <ul>
-            <li>{{ item }}</li>
-            <li>{{ item }}</li>
-            <li>{{ item }}</li>
-            <li>{{ item }}</li>
-            <li>
-              <app-actions-list
-                [nameRoute]="'teste'"
-                [id]="1"
-              ></app-actions-list>
-            </li>
+          <ul [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
+            @for (column of params.columns; track $index) {
+              <li>{{ item[column.field!] }}</li>
+            }
+
+            @if (showActions) {
+              <li class="actions">
+                <app-actions-list
+                  [nameRoute]="'teste'"
+                  [id]="item['id']"
+                ></app-actions-list>
+              </li>
+            }
           </ul>
         }
       </main>

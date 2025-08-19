@@ -16,6 +16,7 @@ import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular
       padding: 5px 10px;
       background: none;
       border: 1px solid #ccc;
+      border-radius: 5px;
       outline: none;
     }
   `

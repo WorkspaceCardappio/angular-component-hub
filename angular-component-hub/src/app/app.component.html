@@ -1,7 +1,14 @@
 <app-list
   [params]="{
     route: 'teste',
-    service: entityService
+    service: entityService,
+    columns: [
+      { title: 'Universo', field: 'teste' },
+      { title: 'Mundo', field: 'mundo' },
+      { title: 'Universo', field: 'universo' },
+      { title: 'Ricardo', field: 'ricardo' },
+      { title: 'Kenji', field: 'kenji' },
+    ]
   }"
 ></app-list>
 
