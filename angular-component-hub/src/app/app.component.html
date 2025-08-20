@@ -1,2 +1,74 @@
-<app-save-button></app-save-button>
-<app-cancel-button></app-cancel-button>
+<h1>Exemplos de Autocomplete sem Angular Material</h1>
+
+<button (click)="toggleDisable()">
+  {{ isDisabled ? 'Habilitar' : 'Desabilitar' }} Autocompletes
+</button>
+
+<hr>
+
+<h2>Seleção Única</h2>
+<app-autocomplete [searchService]="searchUsers.bind(this)"
+                  [displayField]="'name'"
+                  [isDisabled]="isDisabled"
+                  placeholder="Buscar usuário"
+                  [(ngModel)]="singleUser"
+                  (selectionChange)="onUserSelection($event)">
+
+  <ng-template #itemTemplate let-user>
+    <div class="user-item">
+      <img [src]="user.avatar" alt="Avatar" class="user-avatar">
+      <div class="user-info">
+        <span>{{ user.name }}</span>
+        <small>{{ user.email }}</small>
+      </div>
+    </div>
+  </ng-template>
+
+</app-autocomplete>
+
+<pre>Valor Selecionado: {{ singleUser | json }}</pre>
+
+<hr>
+
+<h2>Seleção Múltipla</h2>
+<app-autocomplete [searchService]="searchUsers.bind(this)"
+                  [displayField]="'name'"
+                  [isMultiple]="true"
+                  [isDisabled]="isDisabled"
+                  placeholder="Adicionar usuários"
+                  [(ngModel)]="multipleUsers"
+                  (selectionChange)="onUserSelection($event)">
+
+  <ng-template #itemTemplate let-user>
+    <div class="user-item">
+      <img [src]="user.avatar" alt="Avatar" class="user-avatar">
+      <div class="user-info">
+        <span>{{ user.name }}</span>
+      </div>
+    </div>
+  </ng-template>
+
+</app-autocomplete>
+
+<pre>Valores Selecionados: {{ multipleUsers | json }}</pre>
+
+<style>
+  /* Esses estilos são para o seu app.component.html */
+  .user-item {
+    display: flex;
+    align-items: center;
+  }
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+  .user-info {
+    display: flex;
+    flex-direction: column;
+  }
+  .user-info small {
+    color: #888;
+  }
+</style>

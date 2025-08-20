@@ -1,0 +1,68 @@
+<div class="autocomplete-wrapper">
+  <div class="autocomplete-input-container">
+    <input
+      type="text"
+      [placeholder]="placeholder"
+      [formControl]="searchControl"
+      [disabled]="isDisabled"
+      autocomplete="off"
+      (focus)="focusIn()"
+      (input)="focusIn()"
+      (blur)="focusOut()"
+      aria-autocomplete="list"
+    />
+
+    @if (selectedItems.length > 0 && !isMultiple) {
+      <button type="button"
+              class="clear-button"
+              (click)="clearSelection()"
+              aria-label="Limpar seleção">&times;</button>
+    }
+  </div>
+
+  @if (isMultiple && selectedItems.length > 0) {
+    <div class="selected-items-container">
+      @for (item of selectedItems; track $index) {
+        <div class="chip">
+          @if (itemTemplate) {
+            <ng-container [ngTemplateOutlet]="itemTemplate"
+                          [ngTemplateOutletContext]="{ $implicit: item }" />
+          } @else {
+            {{ item[displayField] }}
+          }
+          @if (!isDisabled) {
+            <button type="button"
+                    class="chip-remove"
+                    (click)="removeItem(item, $event)">&times;</button>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Abrimos quando há foco e (carregando ou com opções) -->
+  @if (open$ | async) {
+    <ul class="autocomplete-dropdown" role="listbox">
+      @if (isLoading$ | async) {
+        <li class="loading-state">Buscando...</li>
+      }
+
+      @if (!(isLoading$ | async)) {
+        @for (option of (options$ | async) ?? []; track $index) {
+          <li class="autocomplete-option"
+              role="option"
+              (mousedown)="onOptionSelected(option)">
+            @if (itemTemplate) {
+              <ng-container [ngTemplateOutlet]="itemTemplate"
+                            [ngTemplateOutletContext]="{ $implicit: option }" />
+            } @else {
+              {{ option[displayField] }}
+            }
+          </li>
+        } @empty {
+          <li class="no-results">Nenhum resultado encontrado.</li>
+        }
+      }
+    </ul>
+  }
+</div>

@@ -1,13 +1,81 @@
-import { Component } from '@angular/core';
-import { CancelButtonComponent } from './shared/button/cancel/cancel.component';
-import { SaveButtonComponent } from "./shared/button/save/save.component";
+import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import {AutocompleteComponent} from './shared/auto-complete/auto-complete.component';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  avatar: string;
+}
 
 @Component({
   selector: 'app-root',
-  imports: [SaveButtonComponent, CancelButtonComponent],
+  standalone: true, // O app component também é standalone
+  imports: [
+    CommonModule,
+    FormsModule, // Módulo necessário para o ngModel
+    AutocompleteComponent,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
- title = 'angular-component-hub';
+export class AppComponent implements OnInit {
+  title = 'Autocomplete Genérico';
+  users: User[] = [{
+    id: 1,
+    name: 'João Silva',
+    email: 'joao@example.com',
+    avatar: 'https://i.pravatar.cc/150?u=a'
+  }, {
+    id: 2,
+    name: 'Maria Oliveira',
+    email: 'maria@example.com',
+    avatar: 'https://i.pravatar.cc/150?u=b'
+  }, {
+    id: 3,
+    name: 'Carlos Souza',
+    email: 'carlos@example.com',
+    avatar: 'https://i.pravatar.cc/150?u=c'
+  }, {
+    id: 4,
+    name: 'Ana Rodrigues',
+    email: 'ana@example.com',
+    avatar: 'https://i.pravatar.cc/150?u=d'
+  }, ];
+
+  singleUser!: User;
+  multipleUsers: User[] = [];
+
+  isDisabled = false;
+
+  constructor() {}
+
+  ngOnInit(): void {
+    this.singleUser = this.users[1];
+    this.multipleUsers = [this.users[0], this.users[3]];
+  }
+
+  searchUsers(query: string): Observable<any[]> {
+    console.log('Buscando usuários com:', query);
+    const lowerQuery = query.toLowerCase();
+    console.log('Query em minúsculas:', lowerQuery);
+    const filteredUsers = this.users.filter(user =>
+      user.name.toLowerCase().includes(lowerQuery)
+    );
+    console.log('Usuários filtrados:', filteredUsers);
+    // O pipe(delay(500)) é um bom teste para ver se a busca está acontecendo
+    return of(filteredUsers).pipe(delay(500));
+  }
+
+  onUserSelection(selection: any) {
+    console.log('Seleção atual:', selection);
+  }
+
+  toggleDisable() {
+    this.isDisabled = !this.isDisabled;
+  }
 }
