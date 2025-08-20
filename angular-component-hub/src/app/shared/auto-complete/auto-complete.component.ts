@@ -6,8 +6,8 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
-  BehaviorSubject, Observable, Subject, combineLatest, of,
-} from 'rxjs';
+  BehaviorSubject, Observable, Subject, of,
+} from 'rxjs'; // Removido 'combineLatest'
 import {
   debounceTime, distinctUntilChanged, switchMap, map, tap, takeUntil, catchError, startWith, shareReplay,
 } from 'rxjs/operators';
@@ -37,10 +37,10 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
 
   searchControl = new FormControl<string>('', { nonNullable: true });
 
-  private focused$ = new BehaviorSubject<boolean>(false);
+  // A visibilidade do dropdown será controlada diretamente por este Subject no template
+  focused$ = new BehaviorSubject<boolean>(false);
   isLoading$ = new BehaviorSubject<boolean>(false);
   options$: Observable<any[]> = of([]);
-  open$: Observable<boolean> = of(false);
 
   selectedItems: any[] = [];
   private _value: any | any[] = null;
@@ -75,17 +75,6 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
       shareReplay(1)
     );
 
-    console.log(this.options$); // Verifique se options$ está sendo definido corretamente
-
-    // Lógica corrigida para o open$
-    this.open$ = combineLatest([
-      this.focused$,
-      this.isLoading$,
-      this.options$.pipe(startWith([] as any[])),
-    ]).pipe(
-      map(([focused, loading, options]) => focused && (loading || (options?.length ?? 0) > 0))
-    );
-
     this.searchControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onTouched());
   }
 
@@ -118,7 +107,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     if (!this.isDisabled) this.focused$.next(true);
   }
   focusOut(): void {
-    // pequeno delay para permitir clicar no item
+    // Pequeno delay para permitir o clique em um item antes de fechar o dropdown
     setTimeout(() => this.focused$.next(false), 160);
   }
 
@@ -129,7 +118,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
         this.selectedItems = [...this.selectedItems, item];
       }
       this._value = this.selectedItems;
-      this.searchControl.setValue('', { emitEvent: true }); // continua pesquisando
+      this.searchControl.setValue('', { emitEvent: true }); // Continua pesquisando
     } else {
       this.selectedItems = [item];
       this._value = item;

@@ -40,8 +40,8 @@
     </div>
   }
 
-  <!-- Abrimos quando há foco e (carregando ou com opções) -->
-  @if (open$ | async) {
+  <!-- Agora o dropdown abre sempre que o campo de busca estiver focado -->
+  @if (focused$ | async) {
     <ul class="autocomplete-dropdown" role="listbox">
       @if (isLoading$ | async) {
         <li class="loading-state">Buscando...</li>
