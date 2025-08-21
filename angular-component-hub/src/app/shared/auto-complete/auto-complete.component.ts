@@ -89,7 +89,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     } else {
       this.selectedItems = value ? [value] : [];
       this._value = value ?? null;
-      // Usamos getDisplayText para preencher o input
+
       const text = this.getDisplayText(value);
       this.searchControl.setValue(text, { emitEvent: false });
     }
