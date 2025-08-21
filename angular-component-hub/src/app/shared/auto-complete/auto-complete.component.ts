@@ -27,8 +27,9 @@ import {
 export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() placeholder = 'Buscar...';
   @Input() isMultiple = false;
-  @Input() displayField = 'name';
-  @Input() searchService!: (query: string) => Observable<any[]>;
+  // displayField agora pode ser uma string ou uma função
+  @Input() displayField: string | ((item: any) => string) = 'name';
+  @Input() search!: (query: string) => Observable<any[]>;
   @Input() itemTemplate!: any;
   @Input() isDisabled = false;
 
@@ -37,7 +38,6 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
 
   searchControl = new FormControl<string>('', { nonNullable: true });
 
-  // A visibilidade do dropdown será controlada diretamente por este Subject no template
   focused$ = new BehaviorSubject<boolean>(false);
   isLoading$ = new BehaviorSubject<boolean>(false);
   options$: Observable<any[]> = of([]);
@@ -63,7 +63,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
           this.isLoading$.next(false);
           return of([]);
         }
-        return this.searchService(q).pipe(
+        return this.search(q).pipe(
           map(res => Array.isArray(res) ? res : []),
           tap(() => this.isLoading$.next(false)),
           catchError(() => {
@@ -91,9 +91,11 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     } else {
       this.selectedItems = value ? [value] : [];
       this._value = value ?? null;
-      const text = value ? (value?.[this.displayField] ?? '') : '';
+      // Usamos getDisplayText para preencher o input
+      const text = this.getDisplayText(value);
       this.searchControl.setValue(text, { emitEvent: false });
     }
+
   }
   registerOnChange(fn: any): void { this.onChange = fn; }
   registerOnTouched(fn: any): void { this.onTouched = fn; }
@@ -107,7 +109,6 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     if (!this.isDisabled) this.focused$.next(true);
   }
   focusOut(): void {
-    // Pequeno delay para permitir o clique em um item antes de fechar o dropdown
     setTimeout(() => this.focused$.next(false), 160);
   }
 
@@ -118,12 +119,15 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
         this.selectedItems = [...this.selectedItems, item];
       }
       this._value = this.selectedItems;
-      this.searchControl.setValue('', { emitEvent: true }); // Continua pesquisando
+      this.searchControl.setValue('', { emitEvent: true });
     } else {
       this.selectedItems = [item];
       this._value = item;
-      this.searchControl.setValue(item?.[this.displayField] ?? '', { emitEvent: false });
+      // Usamos getDisplayText para preencher o input após a seleção
+      this.searchControl.setValue(this.getDisplayText(item), { emitEvent: false });
+      this.searchControl.disable()
     }
+
     this.onTouched();
     this.onChange(this._value);
     this.selectionChange.emit(this._value);
@@ -136,6 +140,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
       this._value = this.selectedItems;
     } else {
       this.clearSelection();
+
     }
     this.onTouched();
     this.onChange(this._value);
@@ -143,11 +148,25 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   clearSelection(): void {
+    this.searchControl.enable()
     this.selectedItems = [];
     this._value = this.isMultiple ? [] : null;
     this.searchControl.setValue('', { emitEvent: true });
     this.onTouched();
     this.onChange(this._value);
     this.clear.emit();
+  }
+
+  // Nova função para obter o texto de exibição
+  getDisplayText(item: any): string {
+    if (!item) {
+      return '';
+    }
+    // Se displayField for uma função, a chame
+    if (typeof this.displayField === 'function') {
+      return this.displayField(item);
+    }
+    // Caso contrário, use a string para acessar a propriedade
+    return item[this.displayField] ?? '';
   }
 }

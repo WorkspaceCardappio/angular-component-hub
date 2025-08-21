@@ -24,12 +24,8 @@
     <div class="selected-items-container">
       @for (item of selectedItems; track $index) {
         <div class="chip">
-          @if (itemTemplate) {
-            <ng-container [ngTemplateOutlet]="itemTemplate"
-                          [ngTemplateOutletContext]="{ $implicit: item }" />
-          } @else {
-            {{ item[displayField] }}
-          }
+          <!-- Usa a nova função para exibir o texto -->
+          {{ getDisplayText(item) }}
           @if (!isDisabled) {
             <button type="button"
                     class="chip-remove"
@@ -40,7 +36,6 @@
     </div>
   }
 
-  <!-- Agora o dropdown abre sempre que o campo de busca estiver focado -->
   @if (focused$ | async) {
     <ul class="autocomplete-dropdown" role="listbox">
       @if (isLoading$ | async) {
@@ -52,12 +47,8 @@
           <li class="autocomplete-option"
               role="option"
               (mousedown)="onOptionSelected(option)">
-            @if (itemTemplate) {
-              <ng-container [ngTemplateOutlet]="itemTemplate"
-                            [ngTemplateOutletContext]="{ $implicit: option }" />
-            } @else {
-              {{ option[displayField] }}
-            }
+            <!-- Usa a nova função para exibir o texto -->
+            {{ getDisplayText(option) }}
           </li>
         } @empty {
           <li class="no-results">Nenhum resultado encontrado.</li>

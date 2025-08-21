@@ -1,8 +1,8 @@
 <br><br><br><br>
 
 
-<app-autocomplete [searchService]="searchUsers.bind(this)"
-                  [displayField]="'email'"
+<app-autocomplete [search]="searchUsers.bind(this)"
+                  [displayField]="formatUserForDisplay.bind(this)"
                   [isDisabled]="isDisabled"
                   placeholder="Buscar usuário"
                   [(ngModel)]="singleUser"
@@ -11,7 +11,7 @@
 </app-autocomplete>
 <br><br><br><br>
 
-<app-autocomplete [searchService]="searchUsers.bind(this)"
+<app-autocomplete [search]="searchUsers.bind(this)"
                   [displayField]="'name'"
                   [isMultiple]="true"
                   [isDisabled]="isDisabled"
@@ -21,4 +21,3 @@
 
 
 </app-autocomplete>
-

@@ -49,9 +49,11 @@ export class AppComponent implements OnInit {
 
   singleUser!: User;
   multipleUsers: User[] = [];
+  isDisabled: boolean = false;
 
-  isDisabled = false;
-
+  formatUserForDisplay(user: any): string {
+    return `${user.name} - ${user.email}`;
+  }
   constructor() {}
 
   ngOnInit(): void {
@@ -66,7 +68,9 @@ export class AppComponent implements OnInit {
     const filteredUsers = this.users.filter(user =>
       user.name.toLowerCase().includes(lowerQuery)
     );
-    console.log('Usuários filtrados:', filteredUsers);
+
+    console.log(this.multipleUsers)
+
     // O pipe(delay(500)) é um bom teste para ver se a busca está acontecendo
     return of(filteredUsers).pipe(delay(500));
   }
@@ -75,7 +79,4 @@ export class AppComponent implements OnInit {
     console.log('Seleção atual:', selection);
   }
 
-  toggleDisable() {
-    this.isDisabled = !this.isDisabled;
-  }
 }
