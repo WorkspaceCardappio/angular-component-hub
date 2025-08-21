@@ -28,9 +28,12 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
   @Input() placeholder = 'Buscar...';
   @Input() isMultiple = false;
   @Input() displayField: string | ((item: any) => string) = 'name';
+  @Input() displayMultipleField: string | ((item: any) => string) = 'name';
   @Input() search!: (query: string) => Observable<any[]>;
   @Input() itemTemplate!: any;
   @Input() isDisabled = false;
+  @Input() topLabelInput = 'Selecione um item';
+
 
   @Output() selectionChange = new EventEmitter<any>();
   @Output() clear = new EventEmitter<void>();
@@ -74,7 +77,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
       shareReplay(1)
     );
 
-    this.searchControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => this.onTouched());
+
   }
 
   ngOnDestroy(): void {
@@ -82,7 +85,8 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     this.destroy$.complete();
   }
 
-  writeValue(value: any): void {
+  //controlvalueaccessor
+  writeValue(value: any): void { // n aparee em nehum lugar pq o angular chama
     if (this.isMultiple) {
       this.selectedItems = Array.isArray(value) ? value : [];
       this._value = this.selectedItems;
@@ -95,6 +99,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     }
 
   }
+
   registerOnChange(fn: any): void { this.onChange = fn; }
   registerOnTouched(fn: any): void { this.onTouched = fn; }
   setDisabledState(disabled: boolean): void {
@@ -163,4 +168,17 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
 
     return item[this.displayField] ?? '';
   }
+
+  getDisplayMultipleText(item: any): string {
+    if (!item) {
+      return '';
+    }
+
+    if (typeof this.displayMultipleField === 'function') {
+      return this.displayMultipleField(item);
+    }
+
+    return item[this.displayMultipleField] ?? '';
+  }
+
 }

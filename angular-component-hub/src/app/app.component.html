@@ -6,7 +6,10 @@
                   [isDisabled]="isDisabled"
                   placeholder="Buscar usuário"
                   [(ngModel)]="singleUser"
-                  (selectionChange)="onUserSelection($event)">
+                  (selectionChange)="onUserSelection($event)"
+                  [displayMultipleField]="formatUserForDisplay.bind(this)"
+                  [topLabelInput]="'Selecione alguma coisa'"
+>
 
 </app-autocomplete>
 <br><br><br><br>
@@ -17,7 +20,8 @@
                   [isDisabled]="isDisabled"
                   placeholder="Adicionar usuários"
                   [(ngModel)]="multipleUsers"
-                  (selectionChange)="onUserSelection($event)">
+                  (selectionChange)="onUserSelection($event)"
+                  [displayMultipleField]="formatUserForDisplay.bind(this)">
 
 
 </app-autocomplete>

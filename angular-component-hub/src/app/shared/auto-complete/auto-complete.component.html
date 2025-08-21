@@ -1,5 +1,11 @@
 <div class="autocomplete-wrapper">
+
+  <div class="">{{ topLabelInput }}</div>
+
   <div class="autocomplete-input-container">
+
+
+
     <input
       type="text"
       [placeholder]="placeholder"
@@ -25,7 +31,7 @@
       @for (item of selectedItems; track $index) {
         <div class="chip">
 
-          {{ getDisplayText(item) }}
+          {{ getDisplayMultipleText(item) }}
           @if (!isDisabled) {
             <button type="button"
                     class="chip-remove"

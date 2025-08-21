@@ -151,4 +151,23 @@ $loading-color: #c0c4cc;
       background-color: transparent;
     }
   }
+
+  // No arquivo auto-complete.scss
+
+  // ... outros estilos
+
+  .top-label {
+    position: absolute;
+    top: -8px;
+    left: 8px;
+    padding: 8px $padding;
+    font-weight: bold;
+    color: red;
+    background-color: red;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .autocomplete-dropdown {
+    // ... outros estilos do dropdown
+  }
 }

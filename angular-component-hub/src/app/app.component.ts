@@ -54,6 +54,11 @@ export class AppComponent implements OnInit {
   formatUserForDisplay(user: any): string {
     return `${user.name} - ${user.email}`;
   }
+
+  formatUserForMultipleDisplay(user: any): string {
+    return `${user.name} (${user.id})`;
+  }
+
   constructor() {}
 
   ngOnInit(): void {
