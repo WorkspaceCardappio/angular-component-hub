@@ -7,7 +7,7 @@ import {
 import { CommonModule } from '@angular/common';
 import {
   BehaviorSubject, Observable, Subject, of,
-} from 'rxjs'; // Removido 'combineLatest'
+} from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap, map, tap, takeUntil, catchError, startWith, shareReplay,
 } from 'rxjs/operators';
@@ -27,7 +27,6 @@ import {
 export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() placeholder = 'Buscar...';
   @Input() isMultiple = false;
-  // displayField agora pode ser uma string ou uma função
   @Input() displayField: string | ((item: any) => string) = 'name';
   @Input() search!: (query: string) => Observable<any[]>;
   @Input() itemTemplate!: any;
@@ -83,7 +82,6 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     this.destroy$.complete();
   }
 
-  // ControlValueAccessor
   writeValue(value: any): void {
     if (this.isMultiple) {
       this.selectedItems = Array.isArray(value) ? value : [];
@@ -104,7 +102,6 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     disabled ? this.searchControl.disable() : this.searchControl.enable();
   }
 
-  // Foco / abertura
   focusIn(): void {
     if (!this.isDisabled) this.focused$.next(true);
   }
@@ -112,7 +109,6 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     setTimeout(() => this.focused$.next(false), 160);
   }
 
-  // Seleção
   onOptionSelected(item: any): void {
     if (this.isMultiple) {
       if (!this.selectedItems.some(i => (i?.id ?? i) === (item?.id ?? item))) {
@@ -123,7 +119,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     } else {
       this.selectedItems = [item];
       this._value = item;
-      // Usamos getDisplayText para preencher o input após a seleção
+
       this.searchControl.setValue(this.getDisplayText(item), { emitEvent: false });
       this.searchControl.disable()
     }
@@ -157,16 +153,14 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     this.clear.emit();
   }
 
-  // Nova função para obter o texto de exibição
   getDisplayText(item: any): string {
     if (!item) {
       return '';
     }
-    // Se displayField for uma função, a chame
     if (typeof this.displayField === 'function') {
       return this.displayField(item);
     }
-    // Caso contrário, use a string para acessar a propriedade
+
     return item[this.displayField] ?? '';
   }
 }

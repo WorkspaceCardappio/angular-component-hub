@@ -24,7 +24,7 @@
     <div class="selected-items-container">
       @for (item of selectedItems; track $index) {
         <div class="chip">
-          <!-- Usa a nova função para exibir o texto -->
+
           {{ getDisplayText(item) }}
           @if (!isDisabled) {
             <button type="button"
@@ -47,7 +47,6 @@
           <li class="autocomplete-option"
               role="option"
               (mousedown)="onOptionSelected(option)">
-            <!-- Usa a nova função para exibir o texto -->
             {{ getDisplayText(option) }}
           </li>
         } @empty {

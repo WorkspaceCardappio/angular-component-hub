@@ -14,10 +14,10 @@ interface User {
 
 @Component({
   selector: 'app-root',
-  standalone: true, // O app component também é standalone
+  standalone: true,
   imports: [
     CommonModule,
-    FormsModule, // Módulo necessário para o ngModel
+    FormsModule,
     AutocompleteComponent,
   ],
   templateUrl: './app.component.html',
@@ -71,7 +71,6 @@ export class AppComponent implements OnInit {
 
     console.log(this.multipleUsers)
 
-    // O pipe(delay(500)) é um bom teste para ver se a busca está acontecendo
     return of(filteredUsers).pipe(delay(500));
   }
 

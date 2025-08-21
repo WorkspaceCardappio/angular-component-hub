@@ -1,6 +1,5 @@
-// Variáveis para facilitar a personalização
-$border-radius: 6px; // Diminuído
-$padding: 8px;      // Diminuído
+$border-radius: 6px;
+$padding: 8px;
 $bg-color: #ffffff;
 $border-color: #dcdfe6;
 $focus-border-color: #409eff;
@@ -19,8 +18,8 @@ $loading-color: #c0c4cc;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   position: relative;
   width: 100%;
-  max-width: 400px; // Largura máxima para o componente
-  margin: 0 auto; // Centraliza o componente
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .autocomplete-wrapper {
@@ -36,8 +35,8 @@ $loading-color: #c0c4cc;
   input {
     width: 100%;
     padding: $padding;
-    padding-right: 36px; // Espaço para o botão de limpar
-    font-size: 14px;      // Diminuído
+    padding-right: 36px;
+    font-size: 14px;
     line-height: 1.5;
     color: $text-color;
     background-color: $bg-color;
@@ -68,7 +67,7 @@ $loading-color: #c0c4cc;
     transform: translateY(-50%);
     background: none;
     border: none;
-    font-size: 18px; // Diminuído
+    font-size: 18px;
     color: $chip-remove-color;
     cursor: pointer;
     line-height: 1;
@@ -83,23 +82,23 @@ $loading-color: #c0c4cc;
 .selected-items-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px; // Diminuído
-  margin-top: 6px; // Diminuído
+  gap: 6px;
+  margin-top: 6px;
 
   .chip {
     display: inline-flex;
     align-items: center;
-    padding: 4px 8px; // Diminuído
+    padding: 4px 8px;
     background-color: $chip-bg;
     color: $chip-text;
     border-radius: $border-radius;
-    font-size: 12px; // Diminuído
+    font-size: 12px;
 
     .chip-remove {
-      margin-left: 6px; // Diminuído
+      margin-left: 6px;
       background: none;
       border: none;
-      font-size: 16px; // Diminuído
+      font-size: 16px;
       color: $chip-remove-color;
       cursor: pointer;
       line-height: 1;
@@ -117,23 +116,23 @@ $loading-color: #c0c4cc;
   top: 100%;
   left: 0;
   right: 0;
-  z-index: 100; // Garante que o dropdown fique acima de outros elementos
+  z-index: 100;
   margin-top: 4px;
   background-color: $dropdown-bg;
   border: 1px solid $border-color;
   border-radius: $border-radius;
   box-shadow: $dropdown-shadow;
   list-style-type: none;
-  padding: 6px 0; // Diminuído
-  max-height: 180px; // Diminuído
+  padding: 6px 0;
+  max-height: 180px;
   overflow-y: auto;
   transform-origin: top center;
   transition: opacity 0.2s ease, transform 0.2s ease;
 
   li {
     cursor: pointer;
-    padding: 8px $padding; // Diminuído
-    font-size: 14px; // Diminuído
+    padding: 8px $padding;
+    font-size: 14px;
     color: $text-color;
 
     &:hover {
