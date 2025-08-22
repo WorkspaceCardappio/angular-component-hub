@@ -33,7 +33,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
   @Input() itemTemplate!: any;
   @Input() isDisabled = false;
   @Input() topLabelInput = 'Selecione um item';
-
+  @Input() size: string = '100%';
 
   @Output() selectionChange = new EventEmitter<any>();
   @Output() clear = new EventEmitter<void>();

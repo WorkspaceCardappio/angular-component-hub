@@ -1,11 +1,23 @@
-<div class="autocomplete-wrapper">
+<div class="autocomplete-wrapper" [style.width]="size">
 
-  <div class="">{{ topLabelInput }}</div>
+  @if (isMultiple && selectedItems.length > 0) {
+    <div class="selected-items-container">
+      @for (item of selectedItems; track $index) {
+        <div class="chip">
+          {{ getDisplayMultipleText(item) }}
+          @if (!isDisabled) {
+            <button type="button"
+                    class="chip-remove"
+                    (click)="removeItem(item, $event)">&times;</button>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <div class="top-label">{{ topLabelInput }}</div>
 
   <div class="autocomplete-input-container">
-
-
-
     <input
       type="text"
       [placeholder]="placeholder"
@@ -26,21 +38,6 @@
     }
   </div>
 
-  @if (isMultiple && selectedItems.length > 0) {
-    <div class="selected-items-container">
-      @for (item of selectedItems; track $index) {
-        <div class="chip">
-
-          {{ getDisplayMultipleText(item) }}
-          @if (!isDisabled) {
-            <button type="button"
-                    class="chip-remove"
-                    (click)="removeItem(item, $event)">&times;</button>
-          }
-        </div>
-      }
-    </div>
-  }
 
   @if (focused$ | async) {
     <ul class="autocomplete-dropdown" role="listbox">

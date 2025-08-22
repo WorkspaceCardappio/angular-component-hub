@@ -1,6 +1,3 @@
-<br><br><br><br>
-
-
 <app-autocomplete [search]="searchUsers.bind(this)"
                   [displayField]="formatUserForDisplay.bind(this)"
                   [isDisabled]="isDisabled"
@@ -9,10 +6,10 @@
                   (selectionChange)="onUserSelection($event)"
                   [displayMultipleField]="formatUserForDisplay.bind(this)"
                   [topLabelInput]="'Selecione alguma coisa'"
+                  [size]="'190%'"
 >
 
 </app-autocomplete>
-<br><br><br><br>
 
 <app-autocomplete [search]="searchUsers.bind(this)"
                   [displayField]="'name'"
@@ -21,7 +18,9 @@
                   placeholder="Adicionar usuários"
                   [(ngModel)]="multipleUsers"
                   (selectionChange)="onUserSelection($event)"
-                  [displayMultipleField]="formatUserForDisplay.bind(this)">
+                  [displayMultipleField]="formatUserForDisplay.bind(this)"
+                  [size]="'90%'"
+>
 
 
 </app-autocomplete>
