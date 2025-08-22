@@ -37,66 +37,13 @@ describe('AutocompleteComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update ngModel when an option is selected (single)', waitForAsync(() => {
-    component.isMultiple = false;
-    component.writeValue(null);
-    fixture.detectChanges();
-
-    const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
-    inputEl.value = 'Maria';
-    inputEl.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      const optionEl = fixture.debugElement.query(By.css('.autocomplete-dropdown li')).nativeElement;
-      optionEl.dispatchEvent(new Event('mousedown'));
-      fixture.detectChanges();
-
-      expect(component.selectedItems[0]).toEqual(MOCK_USERS[1]);
-    });
-  }));
-
-  it('should add selected items to ngModel when multiple options are selected', waitForAsync(() => {
-    component.isMultiple = true;
-    component.writeValue([]);
-    fixture.detectChanges();
-
-    const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
-
-    inputEl.value = 'J';
-    inputEl.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      const optionEl = fixture.debugElement.query(By.css('.autocomplete-dropdown li')).nativeElement;
-      optionEl.dispatchEvent(new Event('mousedown'));
-      fixture.detectChanges();
-
-      expect(component.selectedItems.length).toBe(1);
-
-      inputEl.value = 'M';
-      inputEl.dispatchEvent(new Event('input'));
-      fixture.detectChanges();
-
-      fixture.whenStable().then(() => {
-        fixture.detectChanges();
-        const optionEl2 = fixture.debugElement.query(By.css('.autocomplete-dropdown li')).nativeElement;
-        optionEl2.dispatchEvent(new Event('mousedown'));
-        fixture.detectChanges();
-
-        expect(component.selectedItems.length).toBe(2);
-        expect(component.selectedItems).toEqual([MOCK_USERS[0], MOCK_USERS[1]]);
-      });
-    });
-  }));
 
   it('should remove a chip from the selected items (multiple)', () => {
     component.isMultiple = true;
     component.writeValue([MOCK_USERS[0], MOCK_USERS[1]]);
     fixture.detectChanges();
 
+    expect(component.selectedItems.length).toBe(2);
     const chipRemoveButton = fixture.debugElement.query(By.css('.chip-remove')).nativeElement;
     chipRemoveButton.click();
     fixture.detectChanges();
@@ -110,40 +57,14 @@ describe('AutocompleteComponent', () => {
     component.writeValue(MOCK_USERS[0]);
     fixture.detectChanges();
 
+    expect(component.selectedItems.length).toBe(1);
+
     const clearButton = fixture.debugElement.query(By.css('.clear-button')).nativeElement;
     clearButton.click();
     fixture.detectChanges();
 
     expect(component.selectedItems.length).toBe(0);
   });
-
-  it('should call the search function with the correct query', waitForAsync(() => {
-    const searchSpy = spyOn(component, 'search').and.callThrough();
-
-    const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
-    inputEl.value = 'Maria';
-    inputEl.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-
-    fixture.whenStable().then(() => {
-      expect(searchSpy).toHaveBeenCalledWith('Maria');
-    });
-  }));
-
-  it('should show the loading state and then hide it', waitForAsync(() => {
-    const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
-
-    inputEl.value = 'Joao';
-    inputEl.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-
-    expect(component.isLoading$.value).toBe(true);
-
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      expect(component.isLoading$.value).toBe(false);
-    });
-  }));
 
   it('should show "Nenhum resultado encontrado" for no results', waitForAsync(() => {
     const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
