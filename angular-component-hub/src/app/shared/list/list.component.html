@@ -10,30 +10,18 @@
   <input placeholder="Filtro"/>
 
   <div class="filters">
-    <span class="filters-field">
-      <i class="fa-solid fa-file"></i>
-      Categorias
-      <div class="dropdown">
-        <ul>
-          <li><i class="fa-solid fa-file"></i>Teste</li>
-          <li><i class="fa-solid fa-file"></i>Mundo</li>
-          <li><i class="fa-solid fa-file"></i>Categorias</li>
-        </ul>
-      </div>
-    </span>
-    <span class="filters-field">
-      <i class="fa-solid fa-equals"></i>
-      <div class="dropdown">
-        <ul>
-          <li><i class="fa-solid fa-not-equal"></i></li>
-          <li><i class="fa-solid fa-greater-than-equal"></i></li>
-          <li><i class="fa-solid fa-less-than-equal"></i></li>
-          <li><i class="fa-solid fa-greater-than"></i></li>
-          <li><i class="fa-solid fa-less-than"></i></li>
-          <li><i class="fa-solid fa-percent"></i></li>
-        </ul>
-      </div>
-    </span>
+
+    <app-dropdown-menu-list
+      [items]="params.filters!"
+      (selectedChange)="changeTypeFilter($event)"
+      [params]="{ width: '80px', fontSize: '14px' }"
+    ></app-dropdown-menu-list>
+
+    <app-dropdown-type-filter
+      [type]="typeFilter"
+      [params]="{ itemSize: '14px' }"
+      (selectedChange)="changeOperationFilter($event)"
+    ></app-dropdown-type-filter>
   </div>
 
 </div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Pageable } from '../../model/pageable.model';
 import { ActionsListComponent } from "../actions-list/actions-list.component";
@@ -7,6 +7,9 @@ import { GenericButtonComponent } from "../button/generic/generic.component";
 import { PageSizeComponent } from "../page-size/page-size.component";
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { ListParams } from './params/list-params.model';
+import { DropdownMenuListComponent } from "../dropdown-menu-list/dropdown-menu-list.component";
+import { DropdownTypeFilterComponent } from "../dropdown-type-filter/dropdown-type-filter.component";
+import { DropdownItem } from '../dropdown-menu-list/model/dropdown-item.model';
 
 @Component({
   selector: 'app-list',
@@ -16,21 +19,25 @@ import { ListParams } from './params/list-params.model';
     PageSizeComponent,
     GenericButtonComponent,
     GenericButtonComponent,
-    ActionsListComponent
-  ],
+    ActionsListComponent,
+    DropdownMenuListComponent,
+    DropdownTypeFilterComponent
+],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
 })
 export class ListComponent implements OnInit {
 
   @Input({ required: true }) params!: Partial<ListParams>;
+  @Input() showActions = true;
 
   @Input() quantityPages: number[] = [20, 5, 10, 50, 100];
 
   responseData: Pageable = { content: [], empty: false, first: false, last: false, number: 0, totalPages: 30 } as any;
 
   gridTemplateColumns: string | undefined;
-  showActions = true;
+
+  typeFilter: 'string' | 'number' | 'boolean' = 'string';
 
   constructor(
     private readonly _router: Router
@@ -42,7 +49,6 @@ export class ListComponent implements OnInit {
       this.responseData.content.push({ universo: 'universo' + i, mundo: 'mundo', ricardo: 'ricardo', teste: 'teste', id: i, kenji: 'teste' });
     }
 
-    this.defineShowActions();
     this.buildTemplateColumns();
   }
 
@@ -68,9 +74,12 @@ export class ListComponent implements OnInit {
       this.gridTemplateColumns += ' 1fr';
   }
 
-  defineShowActions() {
-    if (this.params.showActions === false)
-      this.showActions = this.params.showActions;
+  changeTypeFilter(value: Partial<DropdownItem>) {
+    this.typeFilter = value.typeValue!;
+  }
+
+  changeOperationFilter(value: string) {
+    console.log(value);
   }
 
 }

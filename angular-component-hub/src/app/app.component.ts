@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { EntityService } from '../entity/entity.service';
 import { ListComponent } from './shared/list/list.component';
+import { DropdownMenuListComponent } from "./shared/dropdown-menu-list/dropdown-menu-list.component";
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,6 @@ import { ListComponent } from './shared/list/list.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'angular-component-hub';
 
   constructor(
     protected readonly entityService: EntityService<any, any>
