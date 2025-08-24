@@ -7,7 +7,12 @@
     (onClick)="goToNew()"
   ></app-generic-button>
 
-  <input placeholder="Filtro"/>
+  <span class="input">
+    <label class="fas fa-search" for="search"></label>
+    <input id="search" placeholder="Pesquisar"/>
+    <button>Filtrar</button>
+  </span>
+
 
   <div class="filters">
 
@@ -18,7 +23,7 @@
     ></app-dropdown-menu-list>
 
     <app-dropdown-type-filter
-      [type]="typeFilter"
+      [type]="selectedFilter?.typeValue || 'string'"
       [params]="{ itemSize: '14px' }"
       (selectedChange)="changeOperationFilter($event)"
     ></app-dropdown-type-filter>

@@ -37,7 +37,7 @@ export class ListComponent implements OnInit {
 
   gridTemplateColumns: string | undefined;
 
-  typeFilter: 'string' | 'number' | 'boolean' = 'string';
+  selectedFilter: Partial<DropdownItem> | undefined;
 
   constructor(
     private readonly _router: Router
@@ -75,7 +75,7 @@ export class ListComponent implements OnInit {
   }
 
   changeTypeFilter(value: Partial<DropdownItem>) {
-    this.typeFilter = value.typeValue!;
+    this.selectedFilter = value;
   }
 
   changeOperationFilter(value: string) {
