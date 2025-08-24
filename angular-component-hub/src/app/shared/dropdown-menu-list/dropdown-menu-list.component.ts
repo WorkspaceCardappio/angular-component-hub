@@ -1,6 +1,6 @@
-import { Component, EventEmitter, input, Input, OnInit, Output, signal, WritableSignal } from '@angular/core';
-import { DropdownItem } from './model/dropdown-item.model';
 import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output, signal, WritableSignal } from '@angular/core';
+import { DropdownItem } from './model/dropdown-item.model';
 import { ParamsDropdown } from './model/params-dropdown.model';
 
 
@@ -21,11 +21,14 @@ export class DropdownMenuListComponent implements OnInit {
   @Input() params: Partial<ParamsDropdown> | undefined;
   @Output() selectedChange: EventEmitter<Partial<DropdownItem>> = new EventEmitter();
 
+  protected internalItems: Partial<DropdownItem>[] = [];
 
   ngOnInit(): void {
 
-    if (this.items.length) {
-      const item = this.items.shift()!
+    this.internalItems = [...this.items];
+
+    if (this.internalItems.length) {
+      const item = this.internalItems.shift()!
       this.selected = signal(item);
       this.selectedChange.emit(item);
     }
@@ -34,14 +37,14 @@ export class DropdownMenuListComponent implements OnInit {
   selectItem(value: Event) {
 
     const itemSelected = (value.currentTarget as HTMLSelectElement).id;
-    const item = this.items.find(item => item.value === itemSelected);
+    const item = this.internalItems.find(item => item.value === itemSelected);
 
     if (!item)
       return;
 
     const oldValue = this.selected();
 
-    this.items = [oldValue, ...this.items.filter(value => value !== item)];
+    this.internalItems = [oldValue, ...this.internalItems.filter(value => value !== item)];
     this.selected.set(item);
     this.selectedChange.emit(item);
   }

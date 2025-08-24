@@ -10,7 +10,7 @@
 
   <div class="dropdown">
     <ul>
-      @for (item of items; track item.value) {
+      @for (item of internalItems; track item.value) {
         <li (click)="selectItem($event)" [id]="item.value">
 
           @if (item.icon) {
