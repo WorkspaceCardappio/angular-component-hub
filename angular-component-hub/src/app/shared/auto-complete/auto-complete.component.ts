@@ -1,12 +1,12 @@
 import {
-  Component, OnInit, Input, Output, EventEmitter, forwardRef, OnDestroy,
+  Component, OnInit, Input, Output, EventEmitter, forwardRef, OnDestroy, signal,
 } from '@angular/core';
 import {
   ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
-  BehaviorSubject, Observable, Subject, of,
+  Observable, Subject, of,
 } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap, map, tap, takeUntil, catchError, startWith, shareReplay,
@@ -27,21 +27,20 @@ import {
 export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() placeholder = 'Buscar...';
   @Input() isMultiple = false;
-  @Input() displayField: string | ((item: any) => string) = 'name';
-  @Input() displayMultipleField: string | ((item: any) => string) = 'name';
-  @Input() search!: (query: string) => Observable<any[]>;
+  @Input() displayField: (item: any) => string = (item: any) => item.name;
+  @Input() displayMultipleField: (item: any) => string = (item: any) => item.name;
+  @Input({ required: true }) search!: (query: string) => Observable<any[]>;
   @Input() itemTemplate!: any;
   @Input() isDisabled = false;
   @Input() topLabelInput = 'Selecione um item';
-  @Input() size: string = '100%';
-
+  @Input() size: number = 20;
   @Output() selectionChange = new EventEmitter<any>();
   @Output() clear = new EventEmitter<void>();
 
   searchControl = new FormControl<string>('', { nonNullable: true });
 
-  focused$ = new BehaviorSubject<boolean>(false);
-  isLoading$ = new BehaviorSubject<boolean>(false);
+  focused = signal<boolean>(false);
+  isLoading = signal<boolean>(false);
   options$: Observable<any[]> = of([]);
 
   selectedItems: any[] = [];
@@ -59,25 +58,25 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     );
 
     this.options$ = query$.pipe(
-      tap(q => this.isLoading$.next(!!q)),
+
+      tap(q => this.isLoading.set(!!q)),
       switchMap(q => {
         if (!q) {
-          this.isLoading$.next(false);
+          this.isLoading.set(false);
           return of([]);
         }
         return this.search(q).pipe(
           map(res => Array.isArray(res) ? res : []),
-          tap(() => this.isLoading$.next(false)),
+
+          tap(() => this.isLoading.set(false)),
           catchError(() => {
-            this.isLoading$.next(false);
+            this.isLoading.set(false);
             return of([]);
           })
         );
       }),
       shareReplay(1)
     );
-
-
   }
 
   ngOnDestroy(): void {
@@ -85,8 +84,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     this.destroy$.complete();
   }
 
-  //controlvalueaccessor
-  writeValue(value: any): void { // n aparee em nehum lugar pq o angular chama
+  writeValue(value: any): void {
     if (this.isMultiple) {
       this.selectedItems = Array.isArray(value) ? value : [];
       this._value = this.selectedItems;
@@ -108,10 +106,11 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   focusIn(): void {
-    if (!this.isDisabled) this.focused$.next(true);
+    if (!this.isDisabled) this.focused.set(true);
   }
+
   focusOut(): void {
-    setTimeout(() => this.focused$.next(false), 160);
+    setTimeout(() => this.focused.set(false), 160);
   }
 
   onOptionSelected(item: any): void {
@@ -136,13 +135,8 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
 
   removeItem(item: any, event?: MouseEvent): void {
     event?.stopPropagation();
-    if (this.isMultiple) {
-      this.selectedItems = this.selectedItems.filter(i => i !== item);
-      this._value = this.selectedItems;
-    } else {
-      this.clearSelection();
+    this.selectedItems = this.selectedItems.filter(i => i !== item);
 
-    }
     this.onTouched();
     this.onChange(this._value);
     this.selectionChange.emit(this._value);
@@ -162,11 +156,9 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     if (!item) {
       return '';
     }
-    if (typeof this.displayField === 'function') {
-      return this.displayField(item);
-    }
 
-    return item[this.displayField] ?? '';
+    return this.displayField(item);
+
   }
 
   getDisplayMultipleText(item: any): string {
@@ -174,11 +166,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
       return '';
     }
 
-    if (typeof this.displayMultipleField === 'function') {
-      return this.displayMultipleField(item);
-    }
+    return this.displayMultipleField(item);
 
-    return item[this.displayMultipleField] ?? '';
   }
-
 }

@@ -1,6 +1,6 @@
-<div class="autocomplete-wrapper" [style.width]="size">
+<div class="autocomplete-wrapper" [style.width]="size + 'vh'">
 
-  @if (isMultiple && selectedItems.length > 0) {
+@if (isMultiple && selectedItems.length > 0) {
     <div class="selected-items-container">
       @for (item of selectedItems; track $index) {
         <div class="chip">
@@ -39,13 +39,13 @@
   </div>
 
 
-  @if (focused$ | async) {
+  @if (focused()) {
     <ul class="autocomplete-dropdown" role="listbox">
-      @if (isLoading$ | async) {
+      @if (isLoading()) {
         <li class="loading-state">Buscando...</li>
       }
 
-      @if (!(isLoading$ | async)) {
+      @if (!(isLoading())) {
         @for (option of (options$ | async) ?? []; track $index) {
           <li class="autocomplete-option"
               role="option"
