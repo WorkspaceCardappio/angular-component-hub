@@ -43,7 +43,7 @@ export class DropdownMenuListComponent implements OnInit {
     const existsSelected = items.some((item) => item.value === selected?.value);
     this.internalItems.set(items.filter((item) => item.value !== selected?.value));
 
-    if (!existsSelected) {
+    if (!existsSelected && this.internalItems().length) {
       this.selected.set(this.internalItems()[0]);
     }
   }
