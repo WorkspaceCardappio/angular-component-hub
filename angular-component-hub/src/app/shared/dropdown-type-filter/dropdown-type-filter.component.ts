@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, input, Input, OnInit, Output, signal, WritableSignal } from '@angular/core';
+import { Component, computed, EventEmitter, input, Input, Output } from '@angular/core';
 import { DropdownMenuListComponent } from "../dropdown-menu-list/dropdown-menu-list.component";
 import { DropdownItem } from '../dropdown-menu-list/model/dropdown-item.model';
 import { ParamsDropdown } from '../dropdown-menu-list/model/params-dropdown.model';
@@ -10,7 +10,7 @@ import { ParamsDropdown } from '../dropdown-menu-list/model/params-dropdown.mode
 })
 export class DropdownTypeFilterComponent {
 
-  selected: Partial<DropdownItem>| undefined;
+  selected: Partial<DropdownItem> | undefined;
 
   @Input() params: Partial<ParamsDropdown> | undefined;
 
@@ -20,21 +20,14 @@ export class DropdownTypeFilterComponent {
 
   itemsToSelect = computed(() => {
 
-    if (this.type() === 'string') return this.setItems(this.itemsToString());
+    if (this.type() === 'string')
+      return this.itemsToString();
 
-    if (this.type() === 'number') return this.setItems(this.itemsToNumber());
+    if (this.type() === 'number')
+      return this.itemsToNumber();
 
-    return this.setItems(this.itemsToBoolean());
+    return this.itemsToBoolean();
   });
-
-  setItems = (items: Partial<DropdownItem>[]) => {
-
-    if (!this.selected) {
-      return items;
-    }
-
-    return [...items.filter(value => value.value !== this.selected?.value)];
-  }
 
   onSelect(item: Partial<DropdownItem>) {
     this.selected = item;

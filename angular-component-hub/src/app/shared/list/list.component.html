@@ -21,7 +21,7 @@
     ></app-dropdown-menu-list>
 
     <app-dropdown-type-filter
-      [type]="selectedFilter().typeValue || 'string'"
+      [type]="selectedFilter().typeValue!"
       [params]="{ itemSize: '12px' }"
       (selectedChange)="changeOperationFilter($event)"
     ></app-dropdown-type-filter>
