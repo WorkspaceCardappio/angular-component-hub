@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, signal } from '@angular/core';
 import { EntityService } from '../entity/entity.service';
 import { ListComponent } from './shared/list/list.component';
-import { DropdownMenuListComponent } from "./shared/dropdown-menu-list/dropdown-menu-list.component";
 
 @Component({
   selector: 'app-root',

@@ -8,7 +8,9 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Filter } from '../../../model/filter.model';
+import { OrderItem } from '../../model/order-item.model';
 import { Pageable } from '../../model/pageable.model';
+import { RequestParams } from '../../model/request-params.model';
 import { ActionsListComponent } from '../actions-list/actions-list.component';
 import { GenericButtonComponent } from '../button/generic/generic.component';
 import { DropdownMenuListComponent } from '../dropdown-menu-list/dropdown-menu-list.component';
@@ -16,6 +18,8 @@ import { DropdownItem } from '../dropdown-menu-list/model/dropdown-item.model';
 import { DropdownTypeFilterComponent } from '../dropdown-type-filter/dropdown-type-filter.component';
 import { PageSizeComponent } from '../page-size/page-size.component';
 import { PaginatorComponent } from '../paginator/paginator.component';
+import { RequestUtils } from '../utils/request-utils';
+import { ColumnListComponent } from "./column-list/column-list.component";
 import { FilterHeaderComponent } from './filter-header/filter-header.component';
 import { ListParams } from './params/list-params.model';
 
@@ -31,11 +35,13 @@ import { ListParams } from './params/list-params.model';
     DropdownMenuListComponent,
     DropdownTypeFilterComponent,
     FilterHeaderComponent,
-  ],
+    ColumnListComponent
+],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
 export class ListComponent implements OnInit {
+
   @Input({ required: true }) params!: Partial<ListParams>;
   @Input() showActions = true;
 
@@ -54,7 +60,11 @@ export class ListComponent implements OnInit {
 
   selectedFilter: WritableSignal<Partial<DropdownItem>> = signal({});
   typeValueFilter: WritableSignal<string> = signal('');
+
+  page: number = 1;
+  size: number = 20;
   activeFilters: Filter[] = [];
+  activeOrders: OrderItem[] = [];
 
   constructor(private readonly _router: Router) {}
 
@@ -74,11 +84,59 @@ export class ListComponent implements OnInit {
   }
 
   detectChangePageSize(value: number) {
-    console.log('Mudou size fazer o findAll Com tamanho diferente:' + value);
+    this.size = value;
+    this.onRefreshList();
   }
 
   detectChangePage(value: number) {
-    console.log('Mudou page findAll Com tamanho diferente:' + value);
+    this.page = value;
+    this.onRefreshList();
+  }
+
+  newFilter(filter: Filter) {
+
+    const index = this.activeFilters.findIndex((value) => value.field === filter.field && value.condition === filter.condition);
+
+    index > -1
+      ? this.activeFilters[index] = filter
+      : this.activeFilters.push(filter);
+
+    this.onRefreshList();
+  }
+
+  newOrder(orderItem: OrderItem) {
+
+    const index = this.activeOrders.findIndex((value) => value.field === orderItem.field);
+
+    if (index === -1) {
+      this.activeOrders.push(orderItem);
+      this.onRefreshList();
+      return;
+    }
+
+    if (orderItem.order === 'none') {
+      this.activeOrders.splice(index, 1);
+      this.onRefreshList();
+      return;
+    }
+
+    this.activeOrders[index] = orderItem
+    this.onRefreshList();
+  }
+
+  onRefreshList() {
+
+    const params: RequestParams = {
+      filters: this.activeFilters,
+      orders: this.activeOrders,
+      page: this.page,
+      size: this.size
+    };
+
+    const completeSearch = RequestUtils.buildRequest(params);
+    console.log(completeSearch);
+    this.params.service?.findAllDTO(completeSearch)
+      .subscribe(value => console.log(value));
   }
 
   goToNew() {
@@ -101,18 +159,4 @@ export class ListComponent implements OnInit {
     this.typeValueFilter.set(value);
   }
 
-  newFilter(filter: Filter) {
-
-    const index = this.activeFilters.findIndex((value) => value.field === filter.field && value.condition === filter.condition);
-
-    index > -1
-      ? this.activeFilters[index] = filter
-      : this.activeFilters.push(filter);
-
-    this.fetchDataWithFilters();
-  }
-
-  fetchDataWithFilters() {
-    console.log('ativos:', this.activeFilters);
-  }
 }

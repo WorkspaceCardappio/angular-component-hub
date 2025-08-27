@@ -31,8 +31,12 @@
 <section>
   <header>
     <ul [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
-      @for (column of params.columns; track $index) {
-      <li>{{ column.title }}</li>
+      @for (column of params.columns; track column.field) {
+        <app-column-list
+          [title]="column.title!"
+          [order]="column.order"
+          (onChangeEmitter)="newOrder($event)"
+        ></app-column-list>
       } @if (showActions) {
       <li class="actions">Ações</li>
       }
@@ -46,7 +50,7 @@
   } @else {
 
   <main>
-    @for (item of responseData.content; track $index) {
+    @for (item of responseData.content; track item.id) {
     <ul [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
       @for (column of params.columns; track $index) {
       <li>{{ item[column.field!] }}</li>

@@ -1,0 +1,17 @@
+<li>
+  <span (click)="onClickOrder()" [ngStyle]="{ cursor: !!order ? 'pointer' : 'default' }">
+    <p>{{ title }}</p>
+
+    @if (order) {
+
+      @if (typeOrder() === 'none') {
+        <i class="fa-solid fa-up-down"></i>
+      } @else if(typeOrder() === 'asc') {
+        <i class="fa-solid fa-arrow-up-a-z"></i>
+      } @else {
+        <i class="fa-solid fa-arrow-down-z-a"></i>
+      }
+    }
+
+  </span>
+</li>
