@@ -1,15 +1,15 @@
-<!--<button-->
-<!--  [ngClass]="{ disabled: disabled }"-->
-<!--  [ngStyle]="getButtonStyles()"-->
-<!--  (click)="handleClick()"-->
-<!--  [disabled]="disabled"-->
-<!--&gt;-->
-<!--  <i-->
-<!--    *ngIf="finalParams.icon.name"-->
-<!--    [class]="finalParams.icon.name"-->
-<!--    [ngStyle]="getIconStyles()"-->
-<!--  ></i>-->
-<!--  <p [ngStyle]="{ fontSize: finalParams.title.size + 'px' }">-->
-<!--    {{ finalParams.title.name }}-->
-<!--  </p>-->
-<!--</button212>-->
+<button
+  [ngClass]="{ disabled: disabled }"
+  [ngStyle]="getButtonStyles()"
+  (click)="handleClick()"
+  [disabled]="disabled"
+>
+  <i
+    *ngIf="finalParams.icon.name"
+    [class]="finalParams.icon.name"
+    [ngStyle]="getIconStyles()"
+  ></i>
+  <p [ngStyle]="{ fontSize: finalParams.title.size + 'px' }">
+    {{ finalParams.title.name }}
+  </p>
+</button>

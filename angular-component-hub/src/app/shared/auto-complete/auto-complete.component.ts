@@ -143,13 +143,17 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   clearSelection(): void {
-    this.searchControl.enable()
-    this.selectedItems = [];
-    this._value = this.isMultiple ? [] : null;
-    this.searchControl.setValue('', { emitEvent: true });
+    this._resetState();
     this.onTouched();
     this.onChange(this._value);
     this.clear.emit();
+  }
+
+  private _resetState(): void {
+    this.searchControl.enable();
+    this.selectedItems = [];
+    this._value = this.isMultiple ? [] : null;
+    this.searchControl.setValue('', { emitEvent: true });
   }
 
   getDisplayText(item: any): string {
