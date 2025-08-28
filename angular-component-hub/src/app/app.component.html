@@ -1,2 +1,8 @@
-<app-save-button></app-save-button>
-<app-cancel-button></app-cancel-button>
+<app-input
+  [label]="'Nome Completo'"
+  [smallLabel]="'Dados Pessoais'"
+  [width]="20"
+  [height]="5"
+  [fontSize]="18"
+  (inputValue)="onNomeChange($event)">
+</app-input>
