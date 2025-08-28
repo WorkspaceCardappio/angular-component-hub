@@ -1,8 +1,7 @@
 
 export interface DropdownItem {
-  icon: string,
-  title: string,
-  value: string,
+  icon: string;
+  title: string;
+  value: string;
   typeValue: 'string' | 'number' | 'boolean';
-  selected: boolean
 }

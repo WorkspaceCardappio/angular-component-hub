@@ -28,6 +28,14 @@
   </div>
 </div>
 
+@if (activeFilters().length) {
+  <app-active-filter
+    [filters]="activeFilters()"
+    (onRemove)="removeFilter($event)"
+    (onRemoveAll)="removeAllFilters()"
+  ></app-active-filter>
+}
+
 <section>
   <header>
     <ul [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">

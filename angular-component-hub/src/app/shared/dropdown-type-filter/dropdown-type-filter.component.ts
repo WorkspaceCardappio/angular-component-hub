@@ -16,7 +16,7 @@ export class DropdownTypeFilterComponent {
 
   readonly type = input<'string' | 'number' | 'boolean'>('string');
 
-  @Output() selectedChange: EventEmitter<string> = new EventEmitter();
+  @Output() selectedChange: EventEmitter<Partial<DropdownItem>> = new EventEmitter();
 
   itemsToSelect = computed(() => {
 
@@ -31,32 +31,32 @@ export class DropdownTypeFilterComponent {
 
   onSelect(item: Partial<DropdownItem>) {
     this.selected = item;
-    this.selectedChange.emit(item.value || '==');
+    this.selectedChange.emit(item);
   }
 
   private itemsToString() {
     return [
-      { icon: 'fa-solid fa-equals', value: '==' },
-      { icon: 'fa-solid fa-not-equal', value: '!=' },
-      { icon: 'fa-solid fa-percent', value: 'teste7' },
+      { icon: 'fa-solid fa-equals', value: '==', title: 'Igual' },
+      { icon: 'fa-solid fa-not-equal', value: '!=', title: 'Diferente' },
+      { icon: 'fa-solid fa-percent', value: 'teste7', title: 'Contém' },
     ];
   }
 
   private itemsToNumber() {
     return [
-      { icon: 'fa-solid fa-equals', value: '==' },
-      { icon: 'fa-solid fa-not-equal', value: '!=' },
-      { icon: 'fa-solid fa-greater-than-equal', value: 'teste3' },
-      { icon: 'fa-solid fa-less-than-equal', value: 'teste4' },
-      { icon: 'fa-solid fa-greater-than', value: 'teste5' },
-      { icon: 'fa-solid fa-less-than', value: 'teste6' },
+      { icon: 'fa-solid fa-equals', value: '==', title: 'Igual' },
+      { icon: 'fa-solid fa-not-equal', value: '!=', title: 'Diferente' },
+      { icon: 'fa-solid fa-greater-than-equal', value: 'teste3', title: 'Maior ou Igual' },
+      { icon: 'fa-solid fa-less-than-equal', value: 'teste4', title: 'Menor ou Igual' },
+      { icon: 'fa-solid fa-greater-than', value: 'teste5', title: 'Maior' },
+      { icon: 'fa-solid fa-less-than', value: 'teste6', title: 'Menor' },
     ];
   }
 
   private itemsToBoolean() {
     return [
-      { icon: 'fa-solid fa-equals', value: '==' },
-      { icon: 'fa-solid fa-not-equal', value: '!=' },
+      { icon: 'fa-solid fa-equals', value: '==', title: 'Menor' },
+      { icon: 'fa-solid fa-not-equal', value: '!=', title: 'Maior' },
     ];
   }
 

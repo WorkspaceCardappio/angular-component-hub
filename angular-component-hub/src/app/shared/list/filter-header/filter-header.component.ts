@@ -16,7 +16,7 @@ import { DropdownItem } from '../../dropdown-menu-list/model/dropdown-item.model
 export class FilterHeaderComponent {
 
   @Input({ required: true }) fieldFilter!: Partial<DropdownItem>;
-  @Input({ required: true }) typeFilter!: string;
+  @Input({ required: true }) typeFilter!: Partial<DropdownItem>;
 
   @Output() newFilter: EventEmitter<Filter> = new EventEmitter();
 
@@ -31,7 +31,9 @@ export class FilterHeaderComponent {
   buildFilter(): Filter {
     return {
       field: this.fieldFilter.value!,
-      condition: this.typeFilter,
+      fieldTitle: this.fieldFilter.title!,
+      condition: this.typeFilter.value!,
+      conditionTitle: this.typeFilter.title!,
       value: this.search.value!
     }
   }

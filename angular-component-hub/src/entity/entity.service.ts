@@ -18,7 +18,7 @@ export class EntityService<V, K> {
 
   public findAllDTO(completeParamsRequest: string): Observable<V[]> {
 
-    return this.httpClient.get<Page<V>>(`${this.resource}?${completeParamsRequest}`)
+    return this.httpClient.get<Page<V>>(`${this.resource}/dto?${completeParamsRequest}`)
       .pipe(map((page: Page<V>) => page.content));
   }
 

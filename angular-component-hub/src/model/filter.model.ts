@@ -1,6 +1,8 @@
 
 export interface Filter {
   field: string;
+  fieldTitle: string;
   condition: string;
-  value: string
+  conditionTitle: string;
+  value: string;
 }

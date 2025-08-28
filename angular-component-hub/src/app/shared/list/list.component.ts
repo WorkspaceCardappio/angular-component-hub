@@ -19,6 +19,7 @@ import { DropdownTypeFilterComponent } from '../dropdown-type-filter/dropdown-ty
 import { PageSizeComponent } from '../page-size/page-size.component';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { RequestUtils } from '../utils/request-utils';
+import { ActiveFilterComponent } from './active-filter/active-filter.component';
 import { ColumnListComponent } from "./column-list/column-list.component";
 import { FilterHeaderComponent } from './filter-header/filter-header.component';
 import { ListParams } from './params/list-params.model';
@@ -35,7 +36,8 @@ import { ListParams } from './params/list-params.model';
     DropdownMenuListComponent,
     DropdownTypeFilterComponent,
     FilterHeaderComponent,
-    ColumnListComponent
+    ColumnListComponent,
+    ActiveFilterComponent
 ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
@@ -59,16 +61,19 @@ export class ListComponent implements OnInit {
   gridTemplateColumns: string | undefined;
 
   selectedFilter: WritableSignal<Partial<DropdownItem>> = signal({});
-  typeValueFilter: WritableSignal<string> = signal('');
+  typeValueFilter: WritableSignal<Partial<DropdownItem>> = signal({});
 
   page: number = 1;
   size: number = 20;
-  activeFilters: Filter[] = [];
+  activeFilters: WritableSignal<Filter[]> = signal([]);
   activeOrders: OrderItem[] = [];
 
   constructor(private readonly _router: Router) {}
 
   ngOnInit(): void {
+
+    // TODO: CHAMAR SERVICE
+
     for (let i = 0; i < 10; i++) {
       this.responseData.content.push({
         universo: 'universo' + i,
@@ -95,11 +100,13 @@ export class ListComponent implements OnInit {
 
   newFilter(filter: Filter) {
 
-    const index = this.activeFilters.findIndex((value) => value.field === filter.field && value.condition === filter.condition);
+    this.activeFilters.update(filters => {
+      const index = filters.findIndex(f => f.field === filter.field && f.condition === filter.condition);
 
-    index > -1
-      ? this.activeFilters[index] = filter
-      : this.activeFilters.push(filter);
+      return index > -1
+        ? [...filters.slice(0, index), filter, ...filters.slice(index + 1)]
+        : [...filters, filter];
+    });
 
     this.onRefreshList();
   }
@@ -127,7 +134,7 @@ export class ListComponent implements OnInit {
   onRefreshList() {
 
     const params: RequestParams = {
-      filters: this.activeFilters,
+      filters: this.activeFilters(),
       orders: this.activeOrders,
       page: this.page,
       size: this.size
@@ -155,8 +162,19 @@ export class ListComponent implements OnInit {
     this.selectedFilter.set(value);
   }
 
-  changeOperationFilter(value: string) {
+  changeOperationFilter(value: Partial<DropdownItem>) {
     this.typeValueFilter.set(value);
+  }
+
+  removeFilter(indexToRemove: number) {
+    this.activeFilters.update(filters => filters.filter((_, index) => index !== indexToRemove));
+    this.onRefreshList();
+  }
+
+  removeAllFilters() {
+    console.log('teste');
+    this.activeFilters.set([]);
+    this.onRefreshList();
   }
 
 }
