@@ -1,0 +1,12 @@
+<div class="custom-input-container">
+  <label class="small-label" [style.font-size]="fontSize + 'px'">{{ smallLabel }}</label>
+  <div class="input-wrapper" [style.width]="width + 'vh'" [style.height]="height + 'vh'">
+    <input
+      type="text"
+      #inputElement
+      [placeholder]="label"
+      [style.font-size]="fontSize + 'px'"
+      [value]="value"
+      (input)="onValueChange(inputElement.value)">
+  </div>
+</div>
