@@ -1,13 +1,22 @@
-import { Component } from '@angular/core';
-import { CancelButtonComponent } from './shared/button/cancel/cancel.component';
-import { SaveButtonComponent } from "./shared/button/save/save.component";
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Component, signal } from '@angular/core';
+import { EntityService } from '../entity/entity.service';
+import { ListComponent } from './shared/list/list.component';
 
 @Component({
   selector: 'app-root',
-  imports: [SaveButtonComponent, CancelButtonComponent],
+  imports: [ListComponent, CommonModule],
+  providers: [
+    EntityService,
+    HttpClient,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
- title = 'angular-component-hub';
+
+  constructor(
+    protected readonly entityService: EntityService<any, any>
+  ) {}
 }
