@@ -172,7 +172,6 @@ export class ListComponent implements OnInit {
   }
 
   removeAllFilters() {
-    console.log('teste');
     this.activeFilters.set([]);
     this.onRefreshList();
   }
