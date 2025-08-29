@@ -1,10 +1,12 @@
-import { Component, Input } from '@angular/core';
+import {Component, forwardRef, Input} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   selector: 'app-checkbox',
   templateUrl: 'checkbox.component.html',
   styleUrl: 'checkbox.scss',
   standalone: true,
+  providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CheckboxComponent ), } ]
 })
 export class CheckboxComponent {
 
