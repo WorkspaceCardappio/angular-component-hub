@@ -43,6 +43,7 @@ $loading-color: #c0c4cc;
     border-radius: $border-radius;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
     outline: none;
+    padding-left: 30px;
 
     &:focus {
       border-color: $focus-border-color;
@@ -161,4 +162,15 @@ $loading-color: #c0c4cc;
   color: gray;
   margin-top: 10px;
 }
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 1vh;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none;
+
+}
+
 

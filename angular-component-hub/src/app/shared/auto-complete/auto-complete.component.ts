@@ -9,7 +9,7 @@ import {
   Observable, Subject, of,
 } from 'rxjs';
 import {
-  debounceTime, distinctUntilChanged, switchMap, map, tap, takeUntil, catchError, startWith, shareReplay,
+  debounceTime, distinctUntilChanged, switchMap, map, tap, catchError, startWith, shareReplay,
 } from 'rxjs/operators';
 
 @Component({
@@ -17,20 +17,14 @@ import {
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './auto-complete.component.html',
-  styleUrls: ['./auto-complete.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => AutocompleteComponent),
-    multi: true,
-  }],
+  styleUrls: ['./auto-complete.scss']
 })
-export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class AutocompleteComponent implements OnInit, OnDestroy {
   @Input() placeholder = 'Buscar...';
   @Input() isMultiple = false;
   @Input() displayField: (item: any) => string = (item: any) => item.name;
   @Input() displayMultipleField: (item: any) => string = (item: any) => item.name;
   @Input({ required: true }) search!: (query: string) => Observable<any[]>;
-  @Input() itemTemplate!: any;
   @Input() isDisabled = false;
   @Input() topLabelInput = 'Selecione um item';
   @Input() size: number = 20;
@@ -82,27 +76,6 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  writeValue(value: any): void {
-    if (this.isMultiple) {
-      this.selectedItems = Array.isArray(value) ? value : [];
-      this._value = this.selectedItems;
-    } else {
-      this.selectedItems = value ? [value] : [];
-      this._value = value ?? null;
-
-      const text = this.getDisplayText(value);
-      this.searchControl.setValue(text, { emitEvent: false });
-    }
-
-  }
-
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(disabled: boolean): void {
-    this.isDisabled = disabled;
-    disabled ? this.searchControl.disable() : this.searchControl.enable();
   }
 
   focusIn(): void {
@@ -166,9 +139,6 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   getDisplayMultipleText(item: any): string {
-    if (!item) {
-      return '';
-    }
 
     return this.displayMultipleField(item);
 

@@ -37,35 +37,6 @@ describe('AutocompleteComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
-  it('should remove a chip from the selected items (multiple)', () => {
-    component.isMultiple = true;
-    component.writeValue([MOCK_USERS[0], MOCK_USERS[1]]);
-    fixture.detectChanges();
-
-    expect(component.selectedItems.length).toBe(2);
-    const chipRemoveButton = fixture.debugElement.query(By.css('.chip-remove')).nativeElement;
-    chipRemoveButton.click();
-    fixture.detectChanges();
-
-    expect(component.selectedItems.length).toBe(1);
-    expect(component.selectedItems).toEqual([MOCK_USERS[1]]);
-  });
-
-  it('should clear selection when the clear button is clicked (single)', () => {
-    component.isMultiple = false;
-    component.writeValue(MOCK_USERS[0]);
-    fixture.detectChanges();
-
-    expect(component.selectedItems.length).toBe(1);
-
-    const clearButton = fixture.debugElement.query(By.css('.clear-button')).nativeElement;
-    clearButton.click();
-    fixture.detectChanges();
-
-    expect(component.selectedItems.length).toBe(0);
-  });
-
   it('should show "Nenhum resultado encontrado" for no results', waitForAsync(() => {
     const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
 
