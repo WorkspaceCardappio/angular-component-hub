@@ -1,8 +1,8 @@
 import {
-  Component, OnInit, Input, Output, EventEmitter, forwardRef, OnDestroy, signal,
+  Component, OnInit, Input, Output, EventEmitter, OnDestroy, signal,
 } from '@angular/core';
 import {
-  ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ReactiveFormsModule,
+  FormControl, ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
@@ -44,11 +44,16 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
+
+    if (this.isDisabled) {
+      this.searchControl.disable();
+    }
+
     const query$ = this.searchControl.valueChanges.pipe(
       startWith(this.searchControl.value),
       debounceTime(200),
       distinctUntilChanged(),
-      map(q => (q ?? '').trim())
+      map(searchQuery => (searchQuery ?? '').trim())
     );
 
     this.options$ = query$.pipe(
