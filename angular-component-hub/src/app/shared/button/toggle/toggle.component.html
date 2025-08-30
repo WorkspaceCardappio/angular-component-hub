@@ -1,4 +1,10 @@
-<label class="switch">
-  <input type="checkbox">
-  <span class="slider round"></span>
-</label>
+<div class="toggle-container">
+  <label class="toggle-main-label" *ngIf="label">{{ label }}</label>
+  <label class="switch">
+    <input
+      type="checkbox"
+      [(ngModel)]="value"
+      (change)="onSwitch.emit(value)">
+    <span class="slider round"></span>
+  </label>
+</div>

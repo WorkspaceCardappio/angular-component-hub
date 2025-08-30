@@ -16,49 +16,40 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
     }
   ]
 })
-export class ToggleComponent implements ControlValueAccessor{
+export class ToggleComponent implements ControlValueAccessor {
 
-@Input() label: string = '';
+  @Input() label: string = '';
+  @Output() onSwitch: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-@Input() disabled: boolean = false;
+  private _value: boolean = false;
+  private onChange = (value: boolean) => {};
+  private onTouched = () => {};
 
-@Input() size: 'small' | 'medium' | 'large' = 'medium';
-
-@Output() onSwitch: EventEmitter<any> = new EventEmitter<any>();
-
-private _value: boolean = false;
-
-private onChange = (value: any) => {};
-private onTouched = () => {};
-
-public get value(): boolean {
-  return this._value;
-}
-
-public set value(val: boolean) {
-  if (val !== this._value) {
-    this._value = val;
-    this.onChange(this._value);
-    this.onTouched();
-    this.onSwitch.emit(this._value);
+  public get value(): boolean {
+    return this._value;
   }
-}
 
-writeValue(value: any): void {
-  this._value = value;
-  this.onChange(this._value);
-}
+  set value(val: boolean) {
+    if (val !== this._value) {
+      this._value = val;
+      this.onChange(this._value);
+      this.onTouched();
+    }
+  }
 
-registerOnChange(fn: any): void {
-  this.onChange = fn;
-}
+  writeValue(value: boolean): void {
+    this.value = value || false;
+  }
 
-registerOnTouched(fn: any): void {
-  this.onTouched = fn;
-}
+  registerOnChange(fn: (value: boolean) => void): void {
+    this.onChange = fn;
+  }
 
-setDisabledState?(isDisabled: boolean): void {
-  this.disabled = isDisabled;
-}
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
 
+  setDisabledState(isDisabled: boolean): void {
+   // Implementar depois do estilo global
+  }
 }
