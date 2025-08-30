@@ -1,11 +1,9 @@
-import {Component} from '@angular/core';
-import {CancelButtonComponent} from './shared/button/cancel/cancel.component';
-import {SaveButtonComponent} from './shared/button/save/save.component';
-import {CheckboxComponent} from './shared/checkbox/checkbox.component';
+import { Component } from '@angular/core';
+import { LeftMenuComponent } from "./shared/left-menu/left-menu.component";
 
 @Component({
   selector: 'app-root',
-  imports: [SaveButtonComponent, CancelButtonComponent, CheckboxComponent],
+  imports: [LeftMenuComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
