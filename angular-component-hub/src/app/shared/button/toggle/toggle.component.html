@@ -1,4 +1,4 @@
-<div class="toggle-container">
+<div class="toggle-container" [ngClass]="{ 'disabled': disabled }">
   <label class="toggle-main-label">{{ label }}</label>
   <label class="switch">
     <input
