@@ -7,12 +7,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class InputComponent {
 
-  @Input() label: string = 'Label do Input';
-  @Input() smallLabel: string = 'Label superior';
-  @Input() width: number = 300;
-  @Input() height: number = 40;
+  @Input() isDisabled: boolean = false;
+  @Input() placeholder: string = 'Label do Input';
+  @Input() label: string = 'Label superior';
+  width: number = 50;
+  height: number = 3;
   @Input() fontSize: number = 16;
-
   @Input() public value: string = '';
 
   @Output() public inputValue = new EventEmitter<string>();

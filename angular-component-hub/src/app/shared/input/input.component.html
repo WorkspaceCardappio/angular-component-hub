@@ -1,5 +1,5 @@
 <div class="custom-input-container">
-  <label class="small-label" [style.font-size]="fontSize + 'px'">{{ smallLabel }}</label>
+  <label class="small-label" [style.font-size]="fontSize + 'px'">{{ label }}</label>
   <div class="input-wrapper" [style.width]="width + 'vh'" [style.height]="height + 'vh'">
     <input
       type="text"
@@ -7,6 +7,7 @@
       [placeholder]="label"
       [style.font-size]="fontSize + 'px'"
       [value]="value"
-      (input)="onValueChange(inputElement.value)">
+      (input)="onValueChange(inputElement.value)"
+      [disabled]="isDisabled">
   </div>
 </div>
