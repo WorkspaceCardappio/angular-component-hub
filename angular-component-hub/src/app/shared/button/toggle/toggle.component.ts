@@ -4,7 +4,6 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
 
 @Component({
   selector: 'app-toggle',
-  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './toggle.component.html',
   styleUrls: ['./toggle.component.scss'],

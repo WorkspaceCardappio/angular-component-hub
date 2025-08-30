@@ -1,2 +1,7 @@
-<app-save-button></app-save-button>
-<app-cancel-button></app-cancel-button>
+<app-toggle
+  [(ngModel)]="value"
+  label="Ativar notificações"
+  (onSwitch)="onToggleChanged($event)">
+</app-toggle>
+
+<h1>Status: {{ value ? 'Ativado' : 'Desativado' }}</h1>
