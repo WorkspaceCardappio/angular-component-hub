@@ -1,5 +1,5 @@
 import { Filter } from "../../../model/filter.model";
-import { OrderItem } from "../../model/order-item.model";
+import { SortItem } from "../../model/order-item.model";
 import { RequestParams } from "../../model/request-params.model";
 
 export class RequestUtils {
@@ -28,12 +28,12 @@ export class RequestUtils {
     return `search=${filter}`;
   }
 
-  static buildSort(orders: OrderItem[]): string {
+  static buildSort(sorts: SortItem[]): string {
 
-    if (!orders.length)
+    if (!sorts.length)
       return '';
 
-    return orders
+    return sorts
       .map(order => `sort=${order.field},${order.order}`)
       .join('&');
   }

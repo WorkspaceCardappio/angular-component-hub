@@ -1,9 +1,9 @@
 import { Filter } from "../../model/filter.model";
-import { OrderItem } from "./order-item.model";
+import { SortItem } from "./order-item.model";
 
 export interface RequestParams {
   filters: Filter[];
-  orders: OrderItem[];
+  orders: SortItem[];
   page: number;
   size: number;
 }

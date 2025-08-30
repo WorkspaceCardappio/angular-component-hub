@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { signal } from '@angular/core';
 import { DropdownMenuListComponent } from './dropdown-menu-list.component';
 
 describe('DropdownMenuListComponent', () => {
@@ -14,6 +15,7 @@ describe('DropdownMenuListComponent', () => {
 
     fixture = TestBed.createComponent(DropdownMenuListComponent);
     component = fixture.componentInstance;
+    (component as any).items = signal([{}])
     fixture.detectChanges();
   });
 

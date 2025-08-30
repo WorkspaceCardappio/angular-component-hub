@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Filter } from '../../../model/filter.model';
-import { OrderItem } from '../../model/order-item.model';
+import { SortItem } from '../../model/order-item.model';
 import { Pageable } from '../../model/pageable.model';
 import { RequestParams } from '../../model/request-params.model';
 import { ActionsListComponent } from '../actions-list/actions-list.component';
@@ -66,7 +66,7 @@ export class ListComponent implements OnInit {
   page: number = 1;
   size: number = 20;
   activeFilters: WritableSignal<Filter[]> = signal([]);
-  activeOrders: OrderItem[] = [];
+  activeSorts: SortItem[] = [];
 
   constructor(private readonly _router: Router) {}
 
@@ -111,23 +111,23 @@ export class ListComponent implements OnInit {
     this.onRefreshList();
   }
 
-  newOrder(orderItem: OrderItem) {
+  newSort(sortItem: SortItem) {
 
-    const index = this.activeOrders.findIndex((value) => value.field === orderItem.field);
+    const index = this.activeSorts.findIndex((value) => value.field === sortItem.field);
 
     if (index === -1) {
-      this.activeOrders.push(orderItem);
+      this.activeSorts.push(sortItem);
       this.onRefreshList();
       return;
     }
 
-    if (orderItem.order === 'none') {
-      this.activeOrders.splice(index, 1);
+    if (sortItem.order === 'none') {
+      this.activeSorts.splice(index, 1);
       this.onRefreshList();
       return;
     }
 
-    this.activeOrders[index] = orderItem
+    this.activeSorts[index] = sortItem;
     this.onRefreshList();
   }
 
@@ -135,7 +135,7 @@ export class ListComponent implements OnInit {
 
     const params: RequestParams = {
       filters: this.activeFilters(),
-      orders: this.activeOrders,
+      orders: this.activeSorts,
       page: this.page,
       size: this.size
     };

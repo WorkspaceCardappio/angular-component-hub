@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, signal, WritableSignal } from '@angular/core';
-import { OrderItem } from '../../../model/order-item.model';
+import { SortItem } from '../../../model/order-item.model';
 
 @Component({
   selector: 'app-column-list',
@@ -13,35 +13,35 @@ export class ColumnListComponent {
   @Input({ required: true }) title!: string;
   @Input({ required: true }) order: string | undefined;
 
-  typeOrder: WritableSignal<'none' | 'desc' | 'asc'> = signal('none');
+  typeSort: WritableSignal<'none' | 'desc' | 'asc'> = signal('none');
 
-  @Output() onChangeEmitter: EventEmitter<OrderItem> = new EventEmitter();
+  @Output() onChangeEmitter: EventEmitter<SortItem> = new EventEmitter();
 
-  onClickOrder() {
-    this.changeTypeOrder();
-    const newOrder = this.buildOrder();
-    this.onChangeEmitter.emit(newOrder);
+  onClickSort() {
+    this.changeTypeSort();
+    const newSort = this.buildSort();
+    this.onChangeEmitter.emit(newSort);
   }
 
-  changeTypeOrder() {
+  changeTypeSort() {
 
-    if (this.typeOrder() === 'none') {
-      this.typeOrder.set('asc');
+    if (this.typeSort() === 'none') {
+      this.typeSort.set('asc');
       return;
     }
 
-    if (this.typeOrder() === 'asc') {
-      this.typeOrder.set('desc');
+    if (this.typeSort() === 'asc') {
+      this.typeSort.set('desc');
       return;
     }
 
-    this.typeOrder.set('none');
+    this.typeSort.set('none');
   }
 
-  private buildOrder(): OrderItem {
+  private buildSort(): SortItem {
     return {
       field: this.order!,
-      order: this.typeOrder()
+      order: this.typeSort()
     }
   }
 }

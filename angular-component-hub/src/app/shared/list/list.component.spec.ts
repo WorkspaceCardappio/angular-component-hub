@@ -14,6 +14,7 @@ describe('ListComponent', () => {
 
     fixture = TestBed.createComponent(ListComponent);
     component = fixture.componentInstance;
+    component.params = { filters: [] };
     fixture.detectChanges();
   });
 

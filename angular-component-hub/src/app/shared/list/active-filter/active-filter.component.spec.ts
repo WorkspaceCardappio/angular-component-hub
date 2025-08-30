@@ -20,4 +20,20 @@ describe('ActiveFilterComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('on Remove', () => {
+    const spy = spyOn(component.onRemove, 'emit');
+
+    component.removeByIndex(12);
+
+    expect(spy).toHaveBeenCalledWith(12);
+  });
+
+  it('on Remove all', () => {
+    const spy = spyOn(component.onRemoveAll, 'emit');
+
+    component.removeAll();
+
+    expect(spy).toHaveBeenCalledWith();
+  });
 });

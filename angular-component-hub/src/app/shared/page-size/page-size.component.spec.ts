@@ -14,6 +14,7 @@ describe('PageSizeComponent', () => {
 
     fixture = TestBed.createComponent(PageSizeComponent);
     component = fixture.componentInstance;
+    component.quantityPages = [20];
     fixture.detectChanges();
   });
 
