@@ -1,17 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   imports: [],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
-  title = 'angular-component-hub';
-
-  constructor() {}
-
-  ngOnInit(): void {
-
-  }
+export class AppComponent {
+ title = 'angular-component-hub';
 }
