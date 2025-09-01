@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'app-root',
   imports: [],
@@ -9,3 +8,4 @@ import { Component } from '@angular/core';
 export class AppComponent {
 
 }
+
