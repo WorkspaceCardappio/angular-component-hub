@@ -1,0 +1,29 @@
+<span class="filters-field" [style]="{ minWidth: params?.width }">
+
+  @if (selected().icon) {
+    <i [class]="selected().icon" [style]="{ fontSize: params?.itemSize || '16px' }"></i>
+  }
+
+  @if (selected().title) {
+    <span [style]="{ fontSize: params?.fontSize || '14px' }">{{ selected().title }}</span>
+  }
+
+  <div class="dropdown">
+    <ul>
+      @for (item of internalItems(); track item.value) {
+        <li (click)="selectItem($event)" [id]="item.value">
+
+          @if (item.icon) {
+            <i [class]="item.icon" [style]="{ fontSize: params?.itemSize || '16px' }"></i>
+          }
+
+          @if (item.title) {
+            <span [style]="{ fontSize: params?.fontSize || '14px' }">{{ item.title }}</span>
+          }
+
+        </li>
+      }
+    </ul>
+  </div>
+
+</span>

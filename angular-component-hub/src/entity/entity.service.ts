@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { Page } from '../model/page.model';
 
@@ -15,6 +15,12 @@ export class EntityService<V, K> {
   constructor(
     private httpClient: HttpClient
   ) { }
+
+  public findAllDTO(completeParamsRequest: string): Observable<V[]> {
+
+    return this.httpClient.get<Page<V>>(`${this.resource}/dto?${completeParamsRequest}`)
+      .pipe(map((page: Page<V>) => page.content));
+  }
 
   public findAll(pageSize: number = this.DEFAULT_PAGE_SIZE, search?: string): Observable<V[]> {
 
