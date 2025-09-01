@@ -18,6 +18,7 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
 export class ToggleComponent implements ControlValueAccessor {
 
   @Input() label: string = '';
+  @Input() disabled: boolean = false;
   @Output() onSwitch: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private _value: boolean = false;
@@ -49,6 +50,6 @@ export class ToggleComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-   // Implementar depois do estilo global
+    this.disabled = isDisabled;
   }
 }
