@@ -1,0 +1,34 @@
+<div class="upload-container">
+    <label class="upload-box">
+        <input type="file" (change)="onFileSelected($event)" hidden #fileInput accept="image/*" />
+        <!--mostra a caixa de upload só se n tover preview
+        file: abre o seletor de arquivos
+        change: dispara o evento quando um arquivo é selecionado
+        hidden: esconde o input oroginal
+        accept="image/*": seleção somente de imagem
+        -->
+        @if (!imagePreview) {
+        <p>Imagem restaurante</p>
+        <span>OU</span>
+        <button type="button" (click)="fileInput.click()">Procurar</button>
+        } @else {
+        <div class="image-wrapper">
+            <img [src]="imagePreview" alt="Preview" class="preview-thumbnail" />
+        </div>
+
+        }
+    </label>
+    <div class="file-info">
+        <span class="file-name">{{ fileName }}</span>
+        <app-generic-button class="delete-btn" 
+          [params]="{
+            background: HIGHLIGHT_COLOR,
+            title: { name: `` },
+            icon: { name: 'fa-regular fa-trash-can', color: '#D33B19' },
+            border: { color: HIGHLIGHT_COLOR },
+            gap: 0
+          }"
+          (onClick)="removeImage()"
+        ></app-generic-button>
+    </div>
+</div>
