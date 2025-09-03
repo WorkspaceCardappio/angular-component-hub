@@ -1,11 +1,10 @@
-import { Component, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GenericButtonComponent } from "../button/generic/generic.component";
 
 @Component({
   selector: 'app-image-upload', //nome do componente
   standalone: true, //indica que é um componente independente
-  imports: [CommonModule, GenericButtonComponent],
+  imports: [CommonModule],
   styleUrls: ['./upload-image.component.scss'],
   templateUrl: './upload-image.component.html',
 })
@@ -41,7 +40,6 @@ export class ImageUploadComponent {
     };
     reader.readAsDataURL(file);
   }
-
   // remove a imagem e o nome do arquivo
   removeImage(): void {
     this.imagePreview = null;
