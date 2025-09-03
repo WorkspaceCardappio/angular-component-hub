@@ -1,17 +1,23 @@
 <div class="upload-container" [class.disabled]="imagePreview" [class.enabled]="!imagePreview">
   <label class="upload-box">
     <input type="file" (change)="onFileSelected($event)" [disabled]="imagePreview" hidden #fileInput accept="image/*" />
+
     @if (!imagePreview) {
     <p>Imagem restaurante</p>
     <span>OU</span>
     <button type="button" (click)="fileInput.click()">Procurar</button>
-    } @else {
+    }
+
+    @else {
     <div class="image-wrapper">
       <img [src]="imagePreview" alt="Preview" class="preview-thumbnail" />
     </div>
     }
   </label>
+
   <div class="file-info">
+    <i class="fa-regular fa-image"></i>
     <span class="file-name">{{ fileName }}</span>
     <i class="fa-regular fa-trash-can" (click)="removeImage()"></i>
   </div>
+</div>

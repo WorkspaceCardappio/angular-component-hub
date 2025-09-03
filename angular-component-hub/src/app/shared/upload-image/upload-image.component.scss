@@ -41,14 +41,20 @@
 }
 
 .image-wrapper {
-  max-width: 200px;
-  max-height: 200px;
+  width: 300px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 .preview-thumbnail {
   max-width: 100%;
   max-height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 5px;
   border: 1px solid #ccc;
 }
@@ -67,12 +73,11 @@
 .file-name {
   flex-grow: 1;
   text-align: left;
-  padding-left: 5px;
   color: #494949;
   font-size: small;
 }
 
-i {
+.fa-trash-can {
   color: #D33B19;
   cursor: pointer;
 
@@ -81,13 +86,14 @@ i {
   }
 }
 
-.upload-container.enabled .file-info {
-  cursor: default !important;
-  pointer-events: none;
-  border: transparent;
-  background-color: transparent;
+.fa-image {
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
+.upload-container.enabled .file-info,
 .upload-container.disabled .upload-box {
   cursor: default !important;
   pointer-events: none;
@@ -95,7 +101,8 @@ i {
   background-color: transparent;
 }
 
-.upload-container.enabled .file-info i.fa-trash-can {
+.upload-container.enabled .file-info i.fa-trash-can,
+.upload-container.enabled .file-info i.fa-image {
   pointer-events: none;
   color: transparent;
 }
