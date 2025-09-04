@@ -1,0 +1,14 @@
+<div class="toggle-container" [ngClass]="{ 'disabled': disabled }">
+  <label class="toggle-main-label">{{ label }}</label>
+  <label class="switch">
+    <input
+      type="checkbox"
+      [(ngModel)]="value"
+      (change)="onSwitch.emit(value)">
+    <span class="slider round">
+      @if(value) {
+        <i class="fa fa-check toggle-icon"></i>
+      }
+    </span>
+  </label>
+</div>

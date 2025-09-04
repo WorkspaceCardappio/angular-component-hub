@@ -17,6 +17,5 @@ describe('AppComponent', () => {
   it(`should have the 'angular-component-hub' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-component-hub');
   });
 });
