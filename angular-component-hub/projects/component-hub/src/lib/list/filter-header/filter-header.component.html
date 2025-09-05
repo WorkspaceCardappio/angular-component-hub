@@ -1,8 +1,0 @@
-<span class="input">
-  <label class="fas fa-search" for="search"></label>
-  <input id="search" placeholder="Pesquisar" [formControl]="search" />
-  <button
-    (click)="onClick()"
-    [ngClass]="{ disabled: !search.valid }"
-  >Filtrar</button>
-</span>

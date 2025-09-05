@@ -1,7 +1,0 @@
-<mat-form-field class="custom" appearance="outline" [style.width]="size + 'vh'">
-  <mat-label>{{ topLabel }}</mat-label>
-  <input matInput [matDatepicker]="picker" [ngModel]="selectedDate" (dateChange)="onDateChange($event)">
-  <mat-hint></mat-hint>
-  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
