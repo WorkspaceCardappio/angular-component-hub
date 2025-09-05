@@ -30,8 +30,14 @@ import {Filter} from '../model/filter.model';
     CommonModule,
     FilterHeaderComponent,
     ColumnListComponent,
-    ActiveFilterComponent
-],
+    ActiveFilterComponent,
+    DropdownMenuListComponent,
+    DropdownTypeFilterComponent,
+    ActionsListComponent,
+    PageSizeComponent,
+    PaginatorComponent,
+    GenericButtonComponent
+  ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })

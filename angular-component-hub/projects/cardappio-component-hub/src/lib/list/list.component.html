@@ -1,30 +1,30 @@
 <div class="header">
-  <app-generic-button
+  <cardappio-generic-button
     [params]="{
       title: { name: 'Novo' },
       icon: { name: 'fa-solid fa-plus', size: '14' }
     }"
     (onClick)="goToNew()"
-  ></app-generic-button>
+  ></cardappio-generic-button>
 
-  <app-filter-header
+  <cardappio-filter-header
     [fieldFilter]="selectedFilter()"
     [typeFilter]="typeValueFilter()"
     (newFilter)="newFilter($event)"
-  ></app-filter-header>
+  ></cardappio-filter-header>
 
   <div class="filters">
-    <app-dropdown-menu-list
+    <cardappio-dropdown-menu-list
       [items]="params.filters!"
       (selectedChange)="changeTypeFilter($event)"
       [params]="{ width: '80px', fontSize: '14px' }"
-    ></app-dropdown-menu-list>
+    ></cardappio-dropdown-menu-list>
 
-    <app-dropdown-type-filter
+    <cardappio-dropdown-type-filter
       [type]="selectedFilter().typeValue!"
       [params]="{ itemSize: '12px' }"
       (selectedChange)="changeOperationFilter($event)"
-    ></app-dropdown-type-filter>
+    ></cardappio-dropdown-type-filter>
   </div>
 </div>
 
@@ -64,10 +64,10 @@
       <li>{{ item[column.field!] }}</li>
       } @if (showActions) {
       <li class="actions">
-        <app-actions-list
+        <cardappio-actions-list
           [nameRoute]="'teste'"
           [id]="item['id']"
-        ></app-actions-list>
+        ></cardappio-actions-list>
       </li>
       }
     </ul>
@@ -76,17 +76,17 @@
 
   <footer>
     <div>
-      <app-page-size
+      <cardappio-page-size
         [quantityPages]="quantityPages"
         (onChange)="detectChangePageSize($event)"
-      ></app-page-size>
+      ></cardappio-page-size>
     </div>
 
     <div class="center">
-      <app-paginator
+      <cardappio-paginator
         [pageable]="responseData"
         (onChange)="detectChangePage($event)"
-      ></app-paginator>
+      ></cardappio-paginator>
     </div>
   </footer>
 

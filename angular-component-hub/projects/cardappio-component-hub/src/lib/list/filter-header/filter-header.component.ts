@@ -5,7 +5,7 @@ import { DropdownItem } from '../../dropdown-menu-list/model/dropdown-item.model
 import {Filter} from '../../model/filter.model';
 
 @Component({
-  selector: 'app-filter-header',
+  selector: 'cardappio-filter-header',
   imports: [
     CommonModule,
     ReactiveFormsModule
@@ -13,7 +13,7 @@ import {Filter} from '../../model/filter.model';
   templateUrl: './filter-header.component.html',
   styleUrl: './filter-header.component.scss',
 })
-export class oFilterHeaderComponent {
+export class FilterHeaderComponent {
 
   @Input({ required: true }) fieldFilter!: Partial<DropdownItem>;
   @Input({ required: true }) typeFilter!: Partial<DropdownItem>;

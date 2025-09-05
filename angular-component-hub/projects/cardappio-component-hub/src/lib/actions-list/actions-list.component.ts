@@ -17,14 +17,14 @@ import {ActionItem} from '../model/action-item.model';
       }
 
       @if (showDialogDelete) {
-        <app-dialog
+        <cardappio-dialog
           [params]="{
             title: 'Deletar',
             content: 'Deseja confirmar a deleção?'
           }"
           (eventCancel)="this.showDialogDelete = !this.showDialogDelete"
           (eventConfirm)="confirmDelete()"
-        ></app-dialog>
+        ></cardappio-dialog>
 
       }
 

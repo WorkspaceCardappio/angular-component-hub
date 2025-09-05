@@ -104,23 +104,23 @@
         }
       }
     },
-    "component-hub": {
+    "cardappio-component-hub": {
       "projectType": "library",
-      "root": "projects/component-hub",
-      "sourceRoot": "projects/component-hub/src",
+      "root": "projects/cardappio-component-hub",
+      "sourceRoot": "projects/cardappio-component-hub/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/component-hub/ng-package.json"
+            "project": "projects/cardappio-component-hub/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/component-hub/tsconfig.lib.prod.json"
+              "tsConfig": "projects/cardappio-component-hub/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/component-hub/tsconfig.lib.json"
+              "tsConfig": "projects/cardappio-component-hub/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -128,7 +128,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/component-hub/tsconfig.spec.json",
+            "tsConfig": "projects/cardappio-component-hub/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
