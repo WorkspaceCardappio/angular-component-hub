@@ -1,0 +1,94 @@
+<div class="header">
+  <app-generic-button
+    [params]="{
+      title: { name: 'Novo' },
+      icon: { name: 'fa-solid fa-plus', size: '14' }
+    }"
+    (onClick)="goToNew()"
+  ></app-generic-button>
+
+  <app-filter-header
+    [fieldFilter]="selectedFilter()"
+    [typeFilter]="typeValueFilter()"
+    (newFilter)="newFilter($event)"
+  ></app-filter-header>
+
+  <div class="filters">
+    <app-dropdown-menu-list
+      [items]="params.filters!"
+      (selectedChange)="changeTypeFilter($event)"
+      [params]="{ width: '80px', fontSize: '14px' }"
+    ></app-dropdown-menu-list>
+
+    <app-dropdown-type-filter
+      [type]="selectedFilter().typeValue!"
+      [params]="{ itemSize: '12px' }"
+      (selectedChange)="changeOperationFilter($event)"
+    ></app-dropdown-type-filter>
+  </div>
+</div>
+
+@if (activeFilters().length) {
+  <app-active-filter
+    [filters]="activeFilters()"
+    (onRemove)="removeFilter($event)"
+    (onRemoveAll)="removeAllFilters()"
+  ></app-active-filter>
+}
+
+<section>
+  <header>
+    <ul [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
+      @for (column of params.columns; track column.field) {
+        <app-column-list
+          [title]="column.title!"
+          [order]="column.order"
+          (onChangeEmitter)="newSort($event)"
+        ></app-column-list>
+      } @if (showActions) {
+      <li class="actions">Ações</li>
+      }
+    </ul>
+  </header>
+
+  @if (responseData.empty) {
+  <div style="text-align: center; padding: 10px">
+    <p>Não possui dados.</p>:', th
+  </div>
+  } @else {
+
+  <main>
+    @for (item of responseData.content; track item.id) {
+    <ul [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
+      @for (column of params.columns; track $index) {
+      <li>{{ item[column.field!] }}</li>
+      } @if (showActions) {
+      <li class="actions">
+        <app-actions-list
+          [nameRoute]="'teste'"
+          [id]="item['id']"
+        ></app-actions-list>
+      </li>
+      }
+    </ul>
+    }
+  </main>
+
+  <footer>
+    <div>
+      <app-page-size
+        [quantityPages]="quantityPages"
+        (onChange)="detectChangePageSize($event)"
+      ></app-page-size>
+    </div>
+
+    <div class="center">
+      <app-paginator
+        [pageable]="responseData"
+        (onChange)="detectChangePage($event)"
+      ></app-paginator>
+    </div>
+  </footer>
+
+  }
+</section>
