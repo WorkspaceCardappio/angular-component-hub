@@ -16,4 +16,5 @@ export * from './lib/header/header.component';
 export * from './lib/input/input.component';
 export * from './lib/list/filter-header/filter-header.component';
 export * from './lib/list/list.component';
-export * from './lib/left-menu/left-menu.component'
+export * from './lib/left-menu/left-menu.component';
+export * from './lib/button/toggle/toggle.component';
