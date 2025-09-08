@@ -16,10 +16,9 @@ export class EntityService<V, K> {
     private httpClient: HttpClient
   ) { }
 
-  public findAllDTO(completeParamsRequest: string): Observable<V[]> {
+  public findAllDTO(completeParamsRequest: string): Observable<Page<V>> {
 
-    return this.httpClient.get<Page<V>>(`${this.resource}/dto?${completeParamsRequest}`)
-      .pipe(map((page: Page<V>) => page.content));
+    return this.httpClient.get<Page<V>>(`${this.resource}/dto?${completeParamsRequest}`);
   }
 
   public findAll(pageSize: number = this.DEFAULT_PAGE_SIZE, search?: string): Observable<V[]> {
