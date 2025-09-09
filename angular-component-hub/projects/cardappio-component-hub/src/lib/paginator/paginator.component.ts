@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
-import {Pageable} from '../model/pageable.model';
 import {PageItem} from '../model/page-item.model';
+import {Page} from '../model/page.model';
 
 @Component({
   selector: 'cardappio-paginator',
@@ -16,7 +16,7 @@ export class PaginatorComponent implements OnInit {
   private readonly INITIAL_PAGE = 1;
   private readonly MORE_PAGES = '...';
 
-  @Input({ required: true }) pageable!: Pageable;
+  @Input({ required: true }) pageable!: Page<any>;
   @Output() onChange: EventEmitter<number> = new EventEmitter();
 
   pages: PageItem[] = [];

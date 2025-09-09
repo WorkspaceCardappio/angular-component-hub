@@ -19,10 +19,10 @@ import { ActiveFilterComponent } from './active-filter/active-filter.component';
 import { ColumnListComponent } from "./column-list/column-list.component";
 import { FilterHeaderComponent } from './filter-header/filter-header.component';
 import { ListParams } from './params/list-params.model';
-import {Pageable} from '../model/pageable.model';
 import {SortItem} from '../model/order-item.model';
 import {RequestParams} from '../model/request-params.model';
 import {Filter} from '../model/filter.model';
+import {Page} from '../model/page.model';
 
 @Component({
   selector: 'app-list',
@@ -48,14 +48,7 @@ export class ListComponent implements OnInit {
 
   @Input() quantityPages: number[] = [20, 5, 10, 50, 100];
 
-  responseData: Pageable = {
-    content: [],
-    empty: false,
-    first: false,
-    last: false,
-    number: 0,
-    totalPages: 30,
-  } as any;
+  responseData: Page<any> = {} as any;
 
   gridTemplateColumns: string | undefined;
 
@@ -71,18 +64,8 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // TODO: CHAMAR SERVICE
-
-    for (let i = 0; i < 10; i++) {
-      this.responseData.content.push({
-        universo: 'universo' + i,
-        mundo: 'mundo',
-        ricardo: 'ricardo',
-        teste: 'teste',
-        id: i,
-        kenji: 'teste',
-      });
-    }
+    this.params.service?.findAllDTO(this.getCompleteSearch())
+      .subscribe(response => this.responseData = response);
 
     this.buildTemplateColumns();
   }
@@ -132,15 +115,7 @@ export class ListComponent implements OnInit {
 
   onRefreshList() {
 
-    const params: RequestParams = {
-      filters: this.activeFilters(),
-      orders: this.activeSorts,
-      page: this.page,
-      size: this.size
-    };
-
-    const completeSearch = RequestUtils.buildRequest(params);
-    console.log(completeSearch);
+    const completeSearch = this.getCompleteSearch();
     this.params.service?.findAllDTO(completeSearch)
       .subscribe((value: any) => console.log(value));
   }
@@ -173,6 +148,18 @@ export class ListComponent implements OnInit {
   removeAllFilters() {
     this.activeFilters.set([]);
     this.onRefreshList();
+  }
+
+  private getCompleteSearch() {
+
+    const params: RequestParams = {
+      filters: this.activeFilters(),
+      orders: this.activeSorts,
+      page: this.page,
+      size: this.size
+    };
+
+    return RequestUtils.buildRequest(params);
   }
 
 }

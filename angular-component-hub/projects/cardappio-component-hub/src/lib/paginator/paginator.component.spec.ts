@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PaginatorComponent } from './paginator.component';
-import {Pageable} from '../model/pageable.model';
+import {Page} from '../model/page.model';
 
 describe('PaginatorComponent', () => {
   let component: PaginatorComponent;
@@ -15,7 +15,7 @@ describe('PaginatorComponent', () => {
 
     fixture = TestBed.createComponent(PaginatorComponent);
     component = fixture.componentInstance;
-    component.pageable = { number: 1 } as Pageable;
+    component.pageable = { number: 1 } as Page<any>;
     fixture.detectChanges();
   });
 
