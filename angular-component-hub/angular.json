@@ -103,21 +103,45 @@
           }
         }
       }
+    },
+    "cardappio-component-hub": {
+      "projectType": "library",
+      "root": "projects/cardappio-component-hub",
+      "sourceRoot": "projects/cardappio-component-hub/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/cardappio-component-hub/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/cardappio-component-hub/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/cardappio-component-hub/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/cardappio-component-hub/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
     "analytics": "d14a8060-4e4a-4044-9796-ddbb7d189aee"
   },
   "schematics": {
-    "@schematics/angular:component": {
-      "type": "component"
-    },
-    "@schematics/angular:directive": {
-      "type": "directive"
-    },
-    "@schematics/angular:service": {
-      "type": "service"
-    },
     "@schematics/angular:guard": {
       "typeSeparator": "."
     },

@@ -1,0 +1,94 @@
+<div class="header">
+  <cardappio-generic-button
+    [params]="{
+      title: { name: 'Novo' },
+      icon: { name: 'fa-solid fa-plus', size: '14' }
+    }"
+    (onClick)="goToNew()"
+  ></cardappio-generic-button>
+
+  <cardappio-filter-header
+    [fieldFilter]="selectedFilter()"
+    [typeFilter]="typeValueFilter()"
+    (newFilter)="newFilter($event)"
+  ></cardappio-filter-header>
+
+  <div class="filters">
+    <cardappio-dropdown-menu-list
+      [items]="params.filters!"
+      (selectedChange)="changeTypeFilter($event)"
+      [params]="{ width: '80px', fontSize: '14px' }"
+    ></cardappio-dropdown-menu-list>
+
+    <cardappio-dropdown-type-filter
+      [type]="selectedFilter().typeValue!"
+      [params]="{ itemSize: '12px' }"
+      (selectedChange)="changeOperationFilter($event)"
+    ></cardappio-dropdown-type-filter>
+  </div>
+</div>
+
+@if (activeFilters().length) {
+  <app-active-filter
+    [filters]="activeFilters()"
+    (onRemove)="removeFilter($event)"
+    (onRemoveAll)="removeAllFilters()"
+  ></app-active-filter>
+}
+
+<section>
+  <header>
+    <ul [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
+      @for (column of params.columns; track column.field) {
+        <app-column-list
+          [title]="column.title!"
+          [order]="column.order"
+          (onChangeEmitter)="newSort($event)"
+        ></app-column-list>
+      } @if (showActions) {
+      <li class="actions">Ações</li>
+      }
+    </ul>
+  </header>
+
+  @if (responseData.empty) {
+  <div style="text-align: center; padding: 10px">
+    <p>Não possui dados.</p>:', th
+  </div>
+  } @else {
+
+  <main>
+    @for (item of responseData.content; track item.id) {
+    <ul [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
+      @for (column of params.columns; track $index) {
+      <li>{{ item[column.field!] }}</li>
+      } @if (showActions) {
+      <li class="actions">
+        <cardappio-actions-list
+          [nameRoute]="'teste'"
+          [id]="item['id']"
+        ></cardappio-actions-list>
+      </li>
+      }
+    </ul>
+    }
+  </main>
+
+  <footer>
+    <div>
+      <cardappio-page-size
+        [quantityPages]="quantityPages"
+        (onChange)="detectChangePageSize($event)"
+      ></cardappio-page-size>
+    </div>
+
+    <div class="center">
+      <cardappio-paginator
+        [pageable]="responseData"
+        (onChange)="detectChangePage($event)"
+      ></cardappio-paginator>
+    </div>
+  </footer>
+
+  }
+</section>
