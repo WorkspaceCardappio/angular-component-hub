@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SortItem } from '../../../model/order-item.model';
 import { ColumnListComponent } from './column-list.component';
+import {SortItem} from '../../model/order-item.model';
 
 describe('ColumnListComponent', () => {
   let component: ColumnListComponent;
