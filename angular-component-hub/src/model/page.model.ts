@@ -1,9 +1,12 @@
 export interface Page<V> {
   content: V[];
-  totalElements: number;
-  totalPages: number;
-  number: number;
-  size: number;
-  first: boolean;
-  last: boolean;
+  empty: boolean,
+  first: boolean,
+  last: boolean,
+  number: number,
+  size: number,
+  totalElements: number,
+  totalPages: number,
+  sort: any,
+  pageable: any
 }
