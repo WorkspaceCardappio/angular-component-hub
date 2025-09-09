@@ -26,6 +26,10 @@
   margin: 5px 0;
 }
 
+.tipo-image {
+  color: #999999;
+}
+
 .upload-box button {
   padding: 5px 15px;
   border: 1px solid #007BFF;
@@ -73,7 +77,7 @@
 .file-name {
   flex-grow: 1;
   text-align: left;
-  color: #494949;
+  color: #000000;
   font-size: small;
 }
 
@@ -87,7 +91,7 @@
 }
 
 .fa-image {
-  color: #555;
+  color: #000000;
   display: flex;
   align-items: center;
   gap: 8px;

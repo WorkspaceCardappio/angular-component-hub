@@ -9,12 +9,11 @@ import { CommonModule } from '@angular/common';
   templateUrl: './upload-image.component.html',
 })
 export class ImageUploadComponent {
+  @Input() label: string = 'Upload de imagem'
+
   imagePreview: string | ArrayBuffer | null = null; 
   fileName: string = ''; 
 
-  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
-  HIGHLIGHT_COLOR: string | undefined;
-  PRIMARY_COLOR_TEXT: string | undefined;
   constructor(private cdr: ChangeDetectorRef) { } 
 
   onFileSelected(event: Event): void {

@@ -1,10 +1,10 @@
-<div class="upload-container" [class.disabled]="imagePreview" [class.enabled]="!imagePreview">
+<div class="upload-container" [class.enabled]="!imagePreview">
   <label class="upload-box">
     <input type="file" (change)="onFileSelected($event)" [disabled]="imagePreview" hidden #fileInput accept="image/*" />
 
     @if (!imagePreview) {
-    <p>Imagem restaurante</p>
-    <span>OU</span>
+    <p>{{ label }}</p>
+    <span class="tipo-image">JPEG, PNG</span>
     <button type="button" (click)="fileInput.click()">Procurar</button>
     }
 
