@@ -12,6 +12,10 @@ import { GenericButtonComponent } from '../button/generic/generic.component';
 import { DropdownMenuListComponent } from '../dropdown-menu-list/dropdown-menu-list.component';
 import { DropdownItem } from '../dropdown-menu-list/model/dropdown-item.model';
 import { DropdownTypeFilterComponent } from '../dropdown-type-filter/dropdown-type-filter.component';
+import { Filter } from '../model/filter.model';
+import { SortItem } from '../model/order-item.model';
+import { Page } from '../model/page.model';
+import { RequestParams } from '../model/request-params.model';
 import { PageSizeComponent } from '../page-size/page-size.component';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { RequestUtils } from '../utils/request-utils';
@@ -19,13 +23,9 @@ import { ActiveFilterComponent } from './active-filter/active-filter.component';
 import { ColumnListComponent } from "./column-list/column-list.component";
 import { FilterHeaderComponent } from './filter-header/filter-header.component';
 import { ListParams } from './params/list-params.model';
-import {SortItem} from '../model/order-item.model';
-import {RequestParams} from '../model/request-params.model';
-import {Filter} from '../model/filter.model';
-import {Page} from '../model/page.model';
 
 @Component({
-  selector: 'app-list',
+  selector: 'cardappio-list',
   imports: [
     CommonModule,
     FilterHeaderComponent,
@@ -65,7 +65,7 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
 
     this.params.service?.findAllDTO(this.getCompleteSearch())
-      .subscribe(response => this.responseData = response);
+      .subscribe((response: any) => this.responseData = response);
 
     this.buildTemplateColumns();
   }
