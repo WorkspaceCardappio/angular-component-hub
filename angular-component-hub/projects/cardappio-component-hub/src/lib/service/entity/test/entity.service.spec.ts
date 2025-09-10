@@ -1,8 +1,8 @@
-import { EntityService } from '../entity.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import SpyObj = jasmine.SpyObj;
 import { of } from 'rxjs';
-import { Page } from '../../model/page.model';
+import { Page } from '../../../model/page.model';
+import { EntityService } from '../entity.service';
+import SpyObj = jasmine.SpyObj;
 
 describe('entity.service.spec.ts', () => {
 
