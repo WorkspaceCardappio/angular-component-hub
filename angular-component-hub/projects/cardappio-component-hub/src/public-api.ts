@@ -20,6 +20,4 @@ export * from './lib/paginator/paginator.component';
 export * from './lib/list/column-list/column-list.component';
 export * from './lib/page-size/page-size.component';
 export * from './lib/upload-image/upload-image.component';
-
-
-
+export * from './lib/service/entity/entity.service';
