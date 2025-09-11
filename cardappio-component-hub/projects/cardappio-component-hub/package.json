@@ -1,12 +1,11 @@
 {
   "name": "cardappio-component-hub",
-  "version": "1.0.2",
+  "version": "2.0.2",
   "peerDependencies": {
     "@angular/common": "^20.2.4",
     "@angular/core": "^20.2.4"
   },
   "dependencies": {
-    "@angular/cli": "^19.2.16",
     "tslib": "^2.3.0"
   },
   "sideEffects": false,

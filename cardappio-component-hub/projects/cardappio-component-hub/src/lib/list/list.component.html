@@ -29,22 +29,22 @@
 </div>
 
 @if (activeFilters().length) {
-  <app-active-filter
+  <cardappio-active-filter
     [filters]="activeFilters()"
     (onRemove)="removeFilter($event)"
     (onRemoveAll)="removeAllFilters()"
-  ></app-active-filter>
+  ></cardappio-active-filter>
 }
 
 <section>
   <header>
     <ul [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
       @for (column of params.columns; track column.field) {
-        <app-column-list
+        <cardappio-column-list
           [title]="column.title!"
           [order]="column.order"
           (onChangeEmitter)="newSort($event)"
-        ></app-column-list>
+        ></cardappio-column-list>
       } @if (showActions) {
       <li class="actions">Ações</li>
       }
