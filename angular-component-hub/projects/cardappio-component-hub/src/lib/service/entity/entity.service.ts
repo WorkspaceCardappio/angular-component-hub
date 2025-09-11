@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Page } from '../model/page.model';
+import { Page } from '../../model/page.model';
 
 @Injectable()
 export class EntityService<V, K> {
@@ -9,11 +9,11 @@ export class EntityService<V, K> {
   private readonly PAGE_SIZE: string = 'page_size';
   private readonly SEARCH: string = 'search';
   private readonly DEFAULT_PAGE_SIZE: number = 20;
-
+  
   resource: string = '';
 
   constructor(
-    private httpClient: HttpClient
+    public httpClient: HttpClient
   ) { }
 
   public findAllDTO(completeParamsRequest: string): Observable<Page<V>> {

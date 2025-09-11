@@ -1,12 +1,14 @@
 {
   "name": "cardappio-component-hub",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "peerDependencies": {
-    "@angular/common": "^19.2.0",
-    "@angular/core": "^19.2.0"
+    "@angular/common": "^20.2.4",
+    "@angular/core": "^20.2.4"
   },
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "main": "fesm2022/cardappio-component-hub.mjs",
+  "typings": "cardappio-component-hub.d.ts"
 }
