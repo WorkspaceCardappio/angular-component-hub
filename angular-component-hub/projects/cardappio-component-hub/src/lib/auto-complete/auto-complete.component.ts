@@ -13,7 +13,7 @@ import {
 } from 'rxjs/operators';
 
 @Component({
-  selector: 'carddapio-autocomplete',
+  selector: 'cardappio-autocomplete',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './auto-complete.component.html',

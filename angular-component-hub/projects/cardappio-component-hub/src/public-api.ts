@@ -1,6 +1,3 @@
-/*
- * Public API Surface of cardappio-component-hub
- */
 
 export * from './lib/actions-list/actions-list.component';
 export * from './lib/auto-complete/auto-complete.component';
@@ -18,3 +15,11 @@ export * from './lib/list/filter-header/filter-header.component';
 export * from './lib/list/list.component';
 export * from './lib/left-menu/left-menu.component';
 export * from './lib/button/toggle/toggle.component';
+export * from './lib/list/active-filter/active-filter.component';
+export * from './lib/paginator/paginator.component';
+export * from './lib/list/column-list/column-list.component';
+export * from './lib/page-size/page-size.component';
+export * from './lib/upload-image/upload-image.component';
+
+
+

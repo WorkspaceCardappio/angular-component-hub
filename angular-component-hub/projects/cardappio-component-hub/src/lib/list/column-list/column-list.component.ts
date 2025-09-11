@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output, signal, WritableSignal } from '
 import {SortItem} from '../../model/order-item.model';
 
 @Component({
-  selector: 'app-column-list',
+  selector: 'cardappio-column-list',
   imports: [CommonModule],
 templateUrl: './column-list.component.html',
   styleUrl: './column-list.component.scss'

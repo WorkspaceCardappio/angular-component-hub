@@ -25,7 +25,7 @@ import {Filter} from '../model/filter.model';
 import {Page} from '../model/page.model';
 
 @Component({
-  selector: 'app-list',
+  selector: 'cardappio-list',
   imports: [
     CommonModule,
     FilterHeaderComponent,

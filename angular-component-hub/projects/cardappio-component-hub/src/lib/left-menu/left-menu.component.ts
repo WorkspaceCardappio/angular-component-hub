@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'carddapio-left-menu',
+  selector: 'cardappio-left-menu',
   imports: [CommonModule],
   templateUrl: './left-menu.component.html',
   standalone: true,
