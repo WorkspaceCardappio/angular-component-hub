@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {Filter} from '../../model/filter.model';
 
 @Component({
-  selector: 'app-active-filter',
+  selector: 'cardappio-active-filter',
   imports: [],
   templateUrl: './active-filter.component.html',
   styleUrl: './active-filter.component.scss'

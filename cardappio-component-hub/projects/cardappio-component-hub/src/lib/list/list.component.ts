@@ -19,24 +19,24 @@ import { RequestParams } from '../model/request-params.model';
 import { PageSizeComponent } from '../page-size/page-size.component';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { RequestUtils } from '../utils/request-utils';
-import { ActiveFilterComponent } from './active-filter/active-filter.component';
-import { ColumnListComponent } from "./column-list/column-list.component";
 import { FilterHeaderComponent } from './filter-header/filter-header.component';
 import { ListParams } from './params/list-params.model';
+import {ColumnListComponent} from './column-list/column-list.component';
+import {ActiveFilterComponent} from './active-filter/active-filter.component';
 
 @Component({
   selector: 'cardappio-list',
   imports: [
     CommonModule,
     FilterHeaderComponent,
-    ColumnListComponent,
-    ActiveFilterComponent,
     DropdownMenuListComponent,
     DropdownTypeFilterComponent,
     ActionsListComponent,
     PageSizeComponent,
     PaginatorComponent,
-    GenericButtonComponent
+    GenericButtonComponent,
+    ColumnListComponent,
+    ActiveFilterComponent
   ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',

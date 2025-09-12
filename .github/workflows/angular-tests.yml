@@ -20,9 +20,9 @@ jobs:
           node-version: 'lts/*'
 
       - name: Instalar dependências # Instala as Dependências de forma Clean
-        working-directory: angular-component-hub
+        working-directory: cardappio-component-hub
         run: npm ci
 
       - name: Rodar Testes # Roda os testes
-        working-directory: angular-component-hub # Entra na pasta do projeto do angular-component-hub pra realizar os processos
+        working-directory: cardappio-component-hub # Entra na pasta do projeto do angular-component-hub pra realizar os processos
         run: npm run test:ci
