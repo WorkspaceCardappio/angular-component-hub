@@ -1,63 +1,77 @@
-# CardappioComponentHub
+# Cardappio Component Hub
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.
+Biblioteca de componentes Angular para o sistema Cardappio.
 
-## Code scaffolding
+## Pré-requisitos
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Node.js
+É necessário ter **Node.js versão 20 ou superior** instalado.
 
+**Usando NVM (recomendado):**
 ```bash
-ng generate component component-name
+# Instalar Node.js 20
+nvm install 20
+nvm use 20
+
+# Verificar versão
+node --version
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+**Ou baixe diretamente do site:** https://nodejs.org
+
+## Instalação
 
 ```bash
-ng generate --help
+npm install
 ```
 
-## Building
+## Como usar
 
-To build the library, run:
+### 1. Fazer login no npm
+Antes de publicar, faça login com as credenciais do Cardappio:
+
+```bash
+npm login
+```
+
+- **Usuário:** `cardappio`  
+- **Senha:** Está disponível no Drive da empresa
+
+### 2. Compilar a biblioteca
 
 ```bash
 ng build cardappio-component-hub
 ```
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
+### 3. Publicar no npm
 
-### Publishing the Library
+```bash
+# Ir para o diretório de distribuição
+cd dist/cardappio-component-hub
 
-Once the project is built, you can publish your library by following these steps:
+# Publicar
+npm publish
+```
 
-1. Navigate to the `dist` directory:
-   ```bash
-   cd dist/cardappio-component-hub
-   ```
+## Desenvolvimento
 
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
+### Gerar novos componentes
+```bash
+ng generate component nome-do-componente
+```
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+### Executar testes
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
+### Ver todos os comandos disponíveis
 ```bash
-ng e2e
+ng generate --help
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Observações
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Sempre incremente a versão antes de publicar: `npm version patch`
+- A biblioteca será compilada na pasta `dist/`
+- Certifique-se de estar logado no npm antes de publicar
