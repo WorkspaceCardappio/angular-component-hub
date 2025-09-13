@@ -50,7 +50,8 @@ export class DropdownMenuListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.items().length) return;
+
+    if (!this.items()?.length) return;
 
     this.internalItems.set([...this.items()]);
     const item = this.internalItems().shift()!;
