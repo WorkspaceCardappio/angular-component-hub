@@ -1,6 +1,6 @@
-import {Filter} from '../model/filter.model';
-import {SortItem} from '../model/order-item.model';
-import {RequestParams} from '../model/request-params.model';
+import { Filter } from '../model/filter.model';
+import { SortItem } from '../model/order-item.model';
+import { RequestParams } from '../model/request-params.model';
 
 export class RequestUtils {
 
