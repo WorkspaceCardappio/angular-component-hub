@@ -29,44 +29,49 @@
 </div>
 
 @if (activeFilters().length) {
-  <cardappio-active-filter
-    [filters]="activeFilters()"
-    (onRemove)="removeFilter($event)"
-    (onRemoveAll)="removeAllFilters()"
-  ></cardappio-active-filter>
+<cardappio-active-filter
+  [filters]="activeFilters()"
+  (onRemove)="removeFilter($event)"
+  (onRemoveAll)="removeAllFilters()"
+></cardappio-active-filter>
 }
 
 <section>
   <header>
     <ul [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
       @for (column of params.columns; track column.field) {
-        <cardappio-column-list
-          [title]="column.title!"
-          [order]="column.order"
-          (onChangeEmitter)="newSort($event)"
-        ></cardappio-column-list>
+      <cardappio-column-list
+        [title]="column.title!"
+        [order]="column.order"
+        (onChangeEmitter)="newSort($event)"
+      ></cardappio-column-list>
       } @if (showActions) {
       <li class="actions">Ações</li>
       }
     </ul>
   </header>
 
-  @if (responseData.empty) {
+  @if (isLoading()) {
+  <div style="text-align: center; padding: 30px; font-size: 20px;">
+    <i class="fas fa-spinner"></i>
+  </div>
+  } @else if (responseData().empty != false) {
   <div style="text-align: center; padding: 10px">
-    <p>Não possui dados.</p>:', th
+    <p>Não possui dados.</p>
   </div>
   } @else {
 
   <main>
-    @for (item of responseData.content; track item.id) {
+    @for (item of responseData().content; track item.id) {
     <ul [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
       @for (column of params.columns; track $index) {
       <li>{{ item[column.field!] }}</li>
       } @if (showActions) {
       <li class="actions">
         <cardappio-actions-list
-          [nameRoute]="'teste'"
+          [nameRoute]="params.route || 'not_exists'"
           [id]="item['id']"
+          [service]="params.service!"
         ></cardappio-actions-list>
       </li>
       }
@@ -84,7 +89,7 @@
 
     <div class="center">
       <cardappio-paginator
-        [pageable]="responseData"
+        [pageable]="responseData()"
         (onChange)="detectChangePage($event)"
       ></cardappio-paginator>
     </div>

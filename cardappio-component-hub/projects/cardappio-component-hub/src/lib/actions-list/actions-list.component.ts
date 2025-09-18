@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import {DialogComponent} from '../dialog/dialog.component';
-import {ActionItem} from '../model/action-item.model';
+import { EntityService } from '../../public-api';
+import { DialogComponent } from '../dialog/dialog.component';
+import { ActionItem } from '../model/action-item.model';
 
 @Component({
   selector: 'cardappio-actions-list',
@@ -50,6 +51,7 @@ export class ActionsListComponent {
 
   @Input({ required: true }) nameRoute!: string;
   @Input({ required: true }) id!: number;
+  @Input({ required: true }) service!: EntityService<any, any>;
 
   @Input() actionsInput: ActionItem[] | undefined;
 
@@ -79,6 +81,6 @@ export class ActionsListComponent {
   }
 
   confirmDelete() {
-    console.log('chamar rota de delete');
+    this.service.delete(this.id).subscribe();
   }
 }

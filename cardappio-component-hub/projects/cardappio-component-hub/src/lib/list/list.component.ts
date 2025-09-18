@@ -7,6 +7,7 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
 import { ActionsListComponent } from '../actions-list/actions-list.component';
 import { GenericButtonComponent } from '../button/generic/generic.component';
 import { DropdownMenuListComponent } from '../dropdown-menu-list/dropdown-menu-list.component';
@@ -19,10 +20,10 @@ import { RequestParams } from '../model/request-params.model';
 import { PageSizeComponent } from '../page-size/page-size.component';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { RequestUtils } from '../utils/request-utils';
+import { ActiveFilterComponent } from './active-filter/active-filter.component';
+import { ColumnListComponent } from './column-list/column-list.component';
 import { FilterHeaderComponent } from './filter-header/filter-header.component';
 import { ListParams } from './params/list-params.model';
-import {ColumnListComponent} from './column-list/column-list.component';
-import {ActiveFilterComponent} from './active-filter/active-filter.component';
 
 @Component({
   selector: 'cardappio-list',
@@ -36,7 +37,7 @@ import {ActiveFilterComponent} from './active-filter/active-filter.component';
     PaginatorComponent,
     GenericButtonComponent,
     ColumnListComponent,
-    ActiveFilterComponent
+    ActiveFilterComponent,
   ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
@@ -48,7 +49,7 @@ export class ListComponent implements OnInit {
 
   @Input() quantityPages: number[] = [20, 5, 10, 50, 100];
 
-  responseData: Page<any> = {} as any;
+  responseData: WritableSignal<Page<any>> = signal({} as Page<any>);
 
   gridTemplateColumns: string | undefined;
 
@@ -60,13 +61,14 @@ export class ListComponent implements OnInit {
   activeFilters: WritableSignal<Filter[]> = signal([]);
   activeSorts: SortItem[] = [];
 
+  isLoading = signal(false);
+
   constructor(private readonly _router: Router) {}
 
   ngOnInit(): void {
 
-    this.params.service?.findAllDTO(this.getCompleteSearch())
-      .subscribe((response: any) => this.responseData = response);
-
+    this.isLoading.set(true);
+    this.findAllBySearch();
     this.buildTemplateColumns();
   }
 
@@ -81,9 +83,10 @@ export class ListComponent implements OnInit {
   }
 
   newFilter(filter: Filter) {
-
-    this.activeFilters.update(filters => {
-      const index = filters.findIndex(f => f.field === filter.field && f.condition === filter.condition);
+    this.activeFilters.update((filters) => {
+      const index = filters.findIndex(
+        (f) => f.field === filter.field && f.condition === filter.condition
+      );
 
       return index > -1
         ? [...filters.slice(0, index), filter, ...filters.slice(index + 1)]
@@ -94,8 +97,9 @@ export class ListComponent implements OnInit {
   }
 
   newSort(sortItem: SortItem) {
-
-    const index = this.activeSorts.findIndex((value) => value.field === sortItem.field);
+    const index = this.activeSorts.findIndex(
+      (value) => value.field === sortItem.field
+    );
 
     if (index === -1) {
       this.activeSorts.push(sortItem);
@@ -114,10 +118,8 @@ export class ListComponent implements OnInit {
   }
 
   onRefreshList() {
-
-    const completeSearch = this.getCompleteSearch();
-    this.params.service?.findAllDTO(completeSearch)
-      .subscribe((value: any) => console.log(value));
+    this.isLoading.set(true);
+    this.findAllBySearch();
   }
 
   goToNew() {
@@ -141,7 +143,9 @@ export class ListComponent implements OnInit {
   }
 
   removeFilter(indexToRemove: number) {
-    this.activeFilters.update(filters => filters.filter((_, index) => index !== indexToRemove));
+    this.activeFilters.update((filters) =>
+      filters.filter((_, index) => index !== indexToRemove)
+    );
     this.onRefreshList();
   }
 
@@ -151,15 +155,19 @@ export class ListComponent implements OnInit {
   }
 
   private getCompleteSearch() {
-
     const params: RequestParams = {
       filters: this.activeFilters(),
       orders: this.activeSorts,
       page: this.page,
-      size: this.size
+      size: this.size,
     };
 
     return RequestUtils.buildRequest(params);
   }
 
+  private findAllBySearch() {
+    this.params.service?.findAllDTO(this.getCompleteSearch())
+      .pipe(finalize(() => this.isLoading.set(false)))
+      .subscribe((response: any) => this.responseData = response);
+  }
 }

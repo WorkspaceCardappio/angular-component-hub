@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
-import {PageItem} from '../model/page-item.model';
-import {Page} from '../model/page.model';
+import { PageItem } from '../model/page-item.model';
+import { Page } from '../model/page.model';
 
 @Component({
   selector: 'cardappio-paginator',
@@ -23,14 +23,15 @@ export class PaginatorComponent implements OnInit {
   currentPage = signal(this.INITIAL_PAGE);
 
   ngOnInit(): void {
-    this.currentPage.set(this.pageable.number + this.INITIAL_PAGE);
+    const pageNumber = this.pageable.number || 0;
+    this.currentPage.set(pageNumber + this.INITIAL_PAGE);
     this.buildPages();
   }
 
   buildPages() {
 
     const pages: PageItem[] = [];
-    const total = this.pageable.totalPages;
+    const total = this.pageable.totalPages || this.INITIAL_PAGE;
     const current = this.currentPage();
 
     if (total <= 7) {
