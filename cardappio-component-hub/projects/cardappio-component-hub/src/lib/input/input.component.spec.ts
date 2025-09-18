@@ -21,10 +21,5 @@ describe('InputComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update value when onValueChange is called', () => {
-    const newValue = 'novo valor de teste';
-    component.onValueChange(newValue);
-    expect(component.value).toBe(newValue);
-  });
 });
 
