@@ -42,7 +42,7 @@ import { ListParams } from './params/list-params.model';
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
-export class ListComponent implements OnInit {
+export class CardappioListComponent implements OnInit {
 
   @Input({ required: true }) params!: Partial<ListParams>;
   @Input() showActions = true;
@@ -56,7 +56,7 @@ export class ListComponent implements OnInit {
   selectedFilter: WritableSignal<Partial<DropdownItem>> = signal({});
   typeValueFilter: WritableSignal<Partial<DropdownItem>> = signal({});
 
-  page: number = 1;
+  page: number = 0;
   size: number = 20;
   activeFilters: WritableSignal<Filter[]> = signal([]);
   activeSorts: SortItem[] = [];
@@ -168,6 +168,6 @@ export class ListComponent implements OnInit {
   private findAllBySearch() {
     this.params.service?.findAllDTO(this.getCompleteSearch())
       .pipe(finalize(() => this.isLoading.set(false)))
-      .subscribe((response: any) => this.responseData = response);
+      .subscribe((response: any) => this.responseData.set(response));
   }
 }

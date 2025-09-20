@@ -83,13 +83,13 @@ export class PaginatorComponent implements OnInit {
   previousPage() {
     this.currentPage.update(current => current - this.INITIAL_PAGE);
     this.buildPages();
-    this.onChange.emit(this.currentPage());
+    this.onEmit();
   }
 
   nextPage() {
     this.currentPage.update(current => current + this.INITIAL_PAGE);
     this.buildPages();
-    this.onChange.emit(this.currentPage());
+    this.onEmit();
   }
 
   defineCurrentPage(value: number | string) {
@@ -99,7 +99,7 @@ export class PaginatorComponent implements OnInit {
 
     this.currentPage.set(value);
     this.buildPages();
-    this.onChange.emit(this.currentPage());
+    this.onEmit();
   }
 
   private addPage(pages: PageItem[], value: string | number, isActive: boolean) {
@@ -108,6 +108,10 @@ export class PaginatorComponent implements OnInit {
       active: isActive,
       disabled: value === this.MORE_PAGES,
     });
+  }
+
+  private onEmit() {
+    this.onChange.emit(this.currentPage() - this.INITIAL_PAGE);
   }
 
 }
