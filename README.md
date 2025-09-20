@@ -1,6 +1,6 @@
 ## Cardappio
 
-### 1.0.9 - 2025-09-18
+### 1.0.12 - 2025-09-18
     - Ajustando paginator para emitir currentPage - 1
     - Ajustando valor default listagem para 0
     - Criando unpulish version para npm
