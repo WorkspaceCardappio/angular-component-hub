@@ -1,10 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ToggleComponent } from '../../projects/cardappio-component-hub/src/public-api';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { CardappioListComponent } from '../../projects/cardappio-component-hub/src/public-api';
+import { Teste } from './teste';
 @Component({
   selector: 'app-root',
-  imports: [ReactiveFormsModule, CommonModule, ToggleComponent],
+  imports: [CardappioListComponent],
+  providers: [Teste],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -14,6 +15,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private readonly builder: FormBuilder,
+    protected readonly service: Teste
   ) {}
 
   ngOnInit(): void {
