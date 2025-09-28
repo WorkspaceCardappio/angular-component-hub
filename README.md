@@ -1,10 +1,15 @@
 ## Cardappio
 
+### 1.0.13 - 2025-09-28
+    - Permitindo personalizar coluna na listagem com base no ngTemplate
+    - Ajustando scroll lateral dependendo do filtro
+
 ### 1.0.12 - 2025-09-18
     - Ajustando paginator para emitir currentPage - 1
     - Ajustando valor default listagem para 0
     - Criando unpulish version para npm
     - Alterando nome de Component de listagem para 'CardappioListCompoenent'
+    - Não emitindo evento de filter quando filter não tem valor
 
 ### 1.0.8 - 2025-09-18
     - Ajustando component de input para passar formControlName

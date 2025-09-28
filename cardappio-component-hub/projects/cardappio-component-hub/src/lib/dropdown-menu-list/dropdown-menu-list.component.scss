@@ -20,6 +20,7 @@
 }
 
 .dropdown {
+  border-radius: 5px;
   position: absolute;
   top: 100%;
   left: 50%;
@@ -28,6 +29,7 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .filters-field:hover .dropdown {
@@ -45,8 +47,8 @@
 }
 
 .dropdown ul li {
-  border-radius: 10px;
-  padding: 10px 20px;
+  border-radius: 5px;
+  padding: 10px 10px;
   display: flex;
   gap: 10px;
   list-style: none;
