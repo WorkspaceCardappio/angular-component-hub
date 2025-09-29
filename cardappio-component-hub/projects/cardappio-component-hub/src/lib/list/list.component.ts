@@ -4,7 +4,6 @@ import {
   Component,
   ContentChildren,
   Input,
-  OnInit,
   QueryList,
   OnInit, resolveForwardRef,
   signal,
