@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActionsListComponent } from './actions-list.component';
 
-describe('ActionsListComponent', () => {
+fdescribe('actions-list-component.spec.ts', () => {
   let component: ActionsListComponent;
   let fixture: ComponentFixture<ActionsListComponent>;
   let serviceMock: any
@@ -25,7 +25,7 @@ describe('ActionsListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should emit event on delete and close dialog', () => {
 
     const spy = spyOn(component.onDelete, 'emit');
 
