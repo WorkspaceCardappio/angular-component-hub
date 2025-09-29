@@ -72,6 +72,7 @@
           [nameRoute]="params.route || 'not_exists'"
           [id]="item['id']"
           [service]="params.service!"
+          (onDelete)="onRefreshList()"
         ></cardappio-actions-list>
       </li>
       }

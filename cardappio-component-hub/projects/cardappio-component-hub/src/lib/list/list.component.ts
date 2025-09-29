@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   Input,
-  OnInit,
+  OnInit, resolveForwardRef,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -170,4 +170,6 @@ export class CardappioListComponent implements OnInit {
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe((response: any) => this.responseData.set(response));
   }
+
+  protected readonly resolveForwardRef = resolveForwardRef;
 }
