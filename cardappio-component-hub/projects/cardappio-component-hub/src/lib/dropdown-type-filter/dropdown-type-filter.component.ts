@@ -39,7 +39,7 @@ export class DropdownTypeFilterComponent {
     return [
       { icon: 'fa-solid fa-equals', value: '==', title: 'Igual' },
       { icon: 'fa-solid fa-not-equal', value: '!=', title: 'Diferente' },
-      { icon: 'fa-solid fa-percent', value: 'teste7', title: 'Contém' },
+      { icon: 'fa-solid fa-percent', value: '*', title: 'Contém' },
     ];
   }
 

@@ -22,7 +22,7 @@
 
     <cardappio-dropdown-type-filter
       [type]="selectedFilter().typeValue!"
-      [params]="{ itemSize: '12px' }"
+      [params]="{ itemSize: '12px', fontSize: '14px' }"
       (selectedChange)="changeOperationFilter($event)"
     ></cardappio-dropdown-type-filter>
   </div>
@@ -65,8 +65,24 @@
     @for (item of responseData().content; track item.id) {
     <ul [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
       @for (column of params.columns; track $index) {
-      <li>{{ item[column.field!] }}</li>
-      } @if (showActions) {
+
+        @if (templateMap[column.field!]) {
+
+          <li>
+            <ng-container
+              [ngTemplateOutlet]="templateMap[column.field!]"
+              [ngTemplateOutletContext]="{ $implicit: item }"
+            ></ng-container>
+          </li>
+        } @else {
+          <li>
+            {{ item[column.field!] }}
+          </li>
+        }
+
+      }
+
+       @if (showActions) {
       <li class="actions">
         <cardappio-actions-list
           [nameRoute]="params.route || 'not_exists'"
