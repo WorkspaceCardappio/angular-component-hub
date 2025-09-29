@@ -1,9 +1,13 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterContentInit,
   Component,
+  ContentChildren,
   Input,
   OnInit,
+  QueryList,
   signal,
+  TemplateRef,
   WritableSignal,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -42,12 +46,14 @@ import { ListParams } from './params/list-params.model';
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })
-export class CardappioListComponent implements OnInit {
-
+export class CardappioListComponent implements OnInit, AfterContentInit {
   @Input({ required: true }) params!: Partial<ListParams>;
   @Input() showActions = true;
 
   @Input() quantityPages: number[] = [20, 5, 10, 50, 100];
+
+  @ContentChildren(TemplateRef, { descendants: true }) templates!: QueryList<TemplateRef<any>>;
+  templateMap: { [key: string]: TemplateRef<any> } = {};
 
   responseData: WritableSignal<Page<any>> = signal({} as Page<any>);
 
@@ -66,10 +72,19 @@ export class CardappioListComponent implements OnInit {
   constructor(private readonly _router: Router) {}
 
   ngOnInit(): void {
-
     this.isLoading.set(true);
     this.findAllBySearch();
     this.buildTemplateColumns();
+  }
+
+  ngAfterContentInit() {
+    this.templateMap = {};
+    this.templates.forEach((template: any) => {
+      const name = template._declarationTContainer?.localNames?.[0];
+      if (name) {
+        this.templateMap[name] = template;
+      }
+    });
   }
 
   detectChangePageSize(value: number) {
