@@ -1,8 +1,9 @@
 import {
-  Component, OnInit, Input, Output, EventEmitter, OnDestroy, signal,
+  Component, OnInit, Input, Output, EventEmitter, OnDestroy, signal, forwardRef,
 } from '@angular/core';
 import {
-  FormControl, ReactiveFormsModule,
+  ControlValueAccessor,
+  FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {
@@ -17,9 +18,17 @@ import {
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './auto-complete.component.html',
-  styleUrls: ['./auto-complete.scss']
+  styleUrls: ['./auto-complete.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => AutocompleteComponent),
+      multi: true
+    }
+  ]
 })
-export class AutocompleteComponent implements OnInit, OnDestroy {
+export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAccessor {
+
   @Input() placeholder = 'Buscar...';
   @Input() isMultiple = false;
   @Input() displayField: (item: any) => string = (item: any) => item.name;
@@ -38,8 +47,8 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
   options$: Observable<any[]> = of([]);
 
   selectedItems: any[] = [];
-  private _value: any | any[] = null;
-  private onChange = (_: any) => {};
+  value: any | any[] = null;
+  private onChange = (value: any) => {};
   private onTouched = () => {};
   private destroy$ = new Subject<void>();
 
@@ -96,19 +105,19 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
       if (!this.selectedItems.some(i => (i?.id ?? i) === (item?.id ?? item))) {
         this.selectedItems = [...this.selectedItems, item];
       }
-      this._value = this.selectedItems;
+      this.value = this.selectedItems;
       this.searchControl.setValue('', { emitEvent: true });
     } else {
       this.selectedItems = [item];
-      this._value = item;
+      this.value = item;
 
       this.searchControl.setValue(this.getDisplayText(item), { emitEvent: false });
       this.searchControl.disable()
     }
 
     this.onTouched();
-    this.onChange(this._value);
-    this.selectionChange.emit(this._value);
+    this.onChange(this.value);
+    this.selectionChange.emit(this.value);
   }
 
   removeItem(item: any, event?: MouseEvent): void {
@@ -116,21 +125,21 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
     this.selectedItems = this.selectedItems.filter(i => i !== item);
 
     this.onTouched();
-    this.onChange(this._value);
-    this.selectionChange.emit(this._value);
+    this.onChange(this.value);
+    this.selectionChange.emit(this.value);
   }
 
   clearSelection(): void {
     this._resetState();
     this.onTouched();
-    this.onChange(this._value);
+    this.onChange(this.value);
     this.clear.emit();
   }
 
   private _resetState(): void {
     this.searchControl.enable();
     this.selectedItems = [];
-    this._value = this.isMultiple ? [] : null;
+    this.value = this.isMultiple ? [] : null;
     this.searchControl.setValue('', { emitEvent: true });
   }
 
@@ -147,5 +156,18 @@ export class AutocompleteComponent implements OnInit, OnDestroy {
 
     return this.displayMultipleField(item);
 
+  }
+
+  writeValue(value: any): void {
+
+    this.value = value ?? [];
+  }
+  registerOnChange(fn: any): void {
+
+    this.onChange = fn
+  }
+  registerOnTouched(fn: any): void {
+
+    this.onTouched = fn;
   }
 }
