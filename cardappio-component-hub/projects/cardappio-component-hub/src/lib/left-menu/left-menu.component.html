@@ -12,24 +12,16 @@
 
   <div class="items">
     <ul>
-      <li [ngClass]="{ left: expanded }">
-        <i class="fa-regular fa-house"></i>
-        @if (expanded) {
-          <p>Início</p>
-        }
-      </li>
-      <li [ngClass]="{ left: expanded }">
-        <i class="fa-regular fa-headphones"></i>
-        @if (expanded) {
-          <p>Fone</p>
-        }
-      </li>
-      <li [ngClass]="{ left: expanded }">
-        <i class="fa-brands fa-discord"></i>
-        @if (expanded) {
-          <p>Discord</p>
-        }
-      </li>
+
+      @for (route of routes; track $index) {
+        <li [ngClass]="{ left: expanded }" (click)="redirectTo(route.path)">
+          <i [ngClass]="route.icon"></i>
+          @if (expanded) {
+            <p>{{ route.name }}</p>
+          }
+        </li>
+      }
+
     </ul>
   </div>
 
