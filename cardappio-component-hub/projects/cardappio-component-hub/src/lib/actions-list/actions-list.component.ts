@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { EntityService } from '../../public-api';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -52,6 +52,7 @@ export class ActionsListComponent {
   @Input({ required: true }) nameRoute!: string;
   @Input({ required: true }) id!: number;
   @Input({ required: true }) service!: EntityService<any, any>;
+  @Output() onDelete: EventEmitter<void> = new EventEmitter<void>();
 
   @Input() actionsInput: ActionItem[] | undefined;
 
@@ -81,6 +82,11 @@ export class ActionsListComponent {
   }
 
   confirmDelete() {
-    this.service.delete(this.id).subscribe();
+
+    this.showDialogDelete = !this.showDialogDelete;
+
+    this.service.delete(this.id).subscribe(() => {
+      this.onDelete.emit();
+    });
   }
 }

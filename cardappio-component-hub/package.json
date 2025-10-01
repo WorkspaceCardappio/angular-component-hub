@@ -1,13 +1,13 @@
 {
   "name": "cardappio-component-hub",
-  "version": "1.0.14",
+  "version": "1.0.16",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "test:ci": "ng test --watch=false --browsers=ChromeHeadless --reporters=dots",
+    "test:ci": "ng test cardappio-component-hub --watch=false --browsers=ChromeHeadless --reporters=dots",
     "serve:ssr:angular-component-hub": "node dist/angular-component-hub/server/server.mjs"
   },
   "private": false,

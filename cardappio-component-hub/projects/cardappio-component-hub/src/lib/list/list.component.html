@@ -82,14 +82,15 @@
 
       }
 
-      @if (showActions) {
-        <li class="actions">
-          <cardappio-actions-list
-            [nameRoute]="params.route || 'not_exists'"
-            [id]="item['id']"
-            [service]="params.service!"
-          ></cardappio-actions-list>
-        </li>
+       @if (showActions) {
+      <li class="actions">
+        <cardappio-actions-list
+          [nameRoute]="params.route || 'not_exists'"
+          [id]="item['id']"
+          [service]="params.service!"
+          (onDelete)="onRefreshList()"
+        ></cardappio-actions-list>
+      </li>
       }
     </ul>
     }
