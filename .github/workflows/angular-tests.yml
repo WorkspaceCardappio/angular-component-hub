@@ -25,4 +25,4 @@ jobs:
 
       - name: Rodar Testes # Roda os testes
         working-directory: cardappio-component-hub # Entra na pasta do projeto do angular-component-hub pra realizar os processos
-        run: test:ci
+        run: npm run test:ci
