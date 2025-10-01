@@ -185,6 +185,4 @@ export class CardappioListComponent implements OnInit, AfterContentInit {
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe((response: any) => this.responseData.set(response));
   }
-
-  protected readonly resolveForwardRef = resolveForwardRef;
 }
