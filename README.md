@@ -1,5 +1,8 @@
 ## Cardappio
 
+### 1.0.14 - 2025-09-30
+    - Ajustando auto-complete-component para reconhecer alterações no formControlName
+
 ### 1.0.13 - 2025-09-28
     - Permitindo personalizar coluna na listagem com base no ngTemplate
     - Ajustando scroll lateral dependendo do filtro

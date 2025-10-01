@@ -109,14 +109,15 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
       this.searchControl.setValue('', { emitEvent: true });
     } else {
       this.selectedItems = [item];
-      this.value = item;
+
+      this.value = this.displayField(item);
 
       this.searchControl.setValue(this.getDisplayText(item), { emitEvent: false });
       this.searchControl.disable()
     }
 
     this.onTouched();
-    this.onChange(this.value);
+    this.onChange(item);
     this.selectionChange.emit(this.value);
   }
 
@@ -160,7 +161,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
 
   writeValue(value: any): void {
 
-    this.value = value ?? [];
+    this.value = value ?? '';
   }
   registerOnChange(fn: any): void {
 
