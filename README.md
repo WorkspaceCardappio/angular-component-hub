@@ -1,5 +1,8 @@
 ## Cardappio
 
+### 1.0.16 - 2025-09-30
+    - Ajustando botão de delete do actions-list para que o modal seja fechado e a listagem seja atualizada ao concluir a request 
+
 ### 1.0.15 - 2025-09-30
     - Ajustando auto-complete-component para reconhecer alterações no formControlName
 

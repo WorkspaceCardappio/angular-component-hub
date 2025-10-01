@@ -1,16 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActionsListComponent } from './actions-list.component';
+import { of } from 'rxjs';
 
-fdescribe('actions-list-component.spec.ts', () => {
+describe('actions-list-component.spec.ts', () => {
   let component: ActionsListComponent;
   let fixture: ComponentFixture<ActionsListComponent>;
   let serviceMock: any
 
   beforeEach(() => {
 
-    serviceMock = jasmine.createSpyObj('EntityService', ['delete']);
-    serviceMock.delete.and.returnValue({});
+    serviceMock = jasmine.createSpyObj('EntityService', ['delete', 'save']);
+    serviceMock.delete.and.returnValue(of(undefined));
 
     TestBed.configureTestingModule({
       imports: [ActionsListComponent]
