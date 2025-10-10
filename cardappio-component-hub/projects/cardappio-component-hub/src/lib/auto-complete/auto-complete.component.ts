@@ -1,17 +1,8 @@
-import {
-  Component, OnInit, Input, Output, EventEmitter, OnDestroy, signal, forwardRef,
-} from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule,
-} from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, signal, forwardRef, ChangeDetectorRef} from '@angular/core';
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {
-  Observable, Subject, of,
-} from 'rxjs';
-import {
-  debounceTime, distinctUntilChanged, switchMap, map, tap, catchError, startWith, shareReplay,
-} from 'rxjs/operators';
+import {Observable, Subject, of} from 'rxjs';
+import {debounceTime, distinctUntilChanged, switchMap, map, tap, catchError, startWith, shareReplay} from 'rxjs/operators';
 
 @Component({
   selector: 'cardappio-autocomplete',
@@ -48,9 +39,11 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
 
   selectedItems: any[] = [];
   value: any | any[] = null;
-  private onChange = (value: any) => {};
-  private onTouched = () => {};
+  private onChange = (value: any) => { };
+  private onTouched = () => { };
   private destroy$ = new Subject<void>();
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
 
@@ -66,16 +59,10 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     );
 
     this.options$ = query$.pipe(
-
-      tap(q => this.isLoading.set(!!q)),
+      tap(() => this.isLoading.set(true)),
       switchMap(q => {
-        if (!q) {
-          this.isLoading.set(false);
-          return of([]);
-        }
         return this.search(q).pipe(
           map(res => Array.isArray(res) ? res : []),
-
           tap(() => this.isLoading.set(false)),
           catchError(() => {
             this.isLoading.set(false);
@@ -100,6 +87,23 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     setTimeout(() => this.focused.set(false), 160);
   }
 
+  resetSearchValue(): void {
+    if (this.selectedItems.length > 0) {
+      if (this.isMultiple) {
+        this.searchControl.setValue(
+          `(${this.selectedItems.length}) ${this.selectedItems.map(item => this.getDisplayMultipleText(item)).join(', ')}`,
+          { emitEvent: false }
+        );
+      } else {
+        this.searchControl.setValue(this.getDisplayText(this.selectedItems[0]), { emitEvent: false });
+      }
+    } else {
+      this.searchControl.setValue('', { emitEvent: false });
+    }
+
+    this.cdr.detectChanges();
+  }
+
   onOptionSelected(item: any): void {
     if (this.isMultiple) {
       if (!this.selectedItems.some(i => (i?.id ?? i) === (item?.id ?? item))) {
@@ -116,6 +120,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
       this.searchControl.disable()
     }
 
+    this.resetSearchValue();
     this.onTouched();
     this.onChange(item);
     this.selectionChange.emit(this.value);
@@ -125,6 +130,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
     event?.stopPropagation();
     this.selectedItems = this.selectedItems.filter(i => i !== item);
 
+    this.resetSearchValue();
     this.onTouched();
     this.onChange(this.value);
     this.selectionChange.emit(this.value);
@@ -132,6 +138,7 @@ export class AutocompleteComponent implements OnInit, OnDestroy, ControlValueAcc
 
   clearSelection(): void {
     this._resetState();
+    this.resetSearchValue();
     this.onTouched();
     this.onChange(this.value);
     this.clear.emit();

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync, fakeAsync, tick } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -12,6 +12,9 @@ const MOCK_USERS = [
 ];
 
 const mockSearch = (query: string): Observable<any[]> => {
+  if (!query) {
+    return of(MOCK_USERS);
+  }
   const lowerQuery = query.toLowerCase();
   return of(MOCK_USERS.filter(user => user.name.toLowerCase().includes(lowerQuery)));
 };
@@ -37,17 +40,32 @@ describe('AutocompleteComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show "Nenhum resultado encontrado" for no results', waitForAsync(() => {
+  it('should show "Nenhum resultado encontrado" for no results', fakeAsync(() => {
+    component.focusIn();
+    fixture.detectChanges();
+
+    component.searchControl.setValue('xyz');
+    tick(200);
+    fixture.detectChanges();
+
+    const noResultsEl = fixture.debugElement.query(By.css('.no-results'));
+    expect(noResultsEl).toBeTruthy();
+    expect(noResultsEl.nativeElement.textContent).toContain('Nenhum resultado encontrado.');
+  }));
+
+  it('should load search values before user digit', waitForAsync(() => {
     const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
 
-    inputEl.value = 'xyz';
-    inputEl.dispatchEvent(new Event('input'));
+    inputEl.dispatchEvent(new Event('focus'));
     fixture.detectChanges();
 
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      const noResultsText = fixture.debugElement.query(By.css('.no-results')).nativeElement.textContent;
-      expect(noResultsText).toContain('Nenhum resultado encontrado.');
+
+      component.options$.subscribe(options => {
+        expect(options.length).toBe(3);
+        expect(options).toEqual(MOCK_USERS);
+      });
     });
-  }));
+  }))
 });
